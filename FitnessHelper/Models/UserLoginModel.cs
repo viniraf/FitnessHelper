@@ -1,9 +1,8 @@
-﻿namespace FitnessHelper.Models
-{
-    public class UserLoginModel
-    {
-        public string Username { get; set; } = string.Empty;
+﻿namespace FitnessHelper.Models;
 
-        public string Password { get; set; } = string.Empty;
-    }
+public class UserLoginModel
+{
+    public string Username { get; set; } = string.Empty;
+
+    public string Password { get; set; } = string.Empty;
 }
