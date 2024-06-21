@@ -3,6 +3,7 @@ using FitnessHelper.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using FitnessHelper.Enums;
 
 namespace FitnessHelper.Controllers;
 
@@ -35,7 +36,24 @@ public class UserController : ControllerBase
     [HttpPost("login")]
     public IActionResult Login(UserLoginModel user)
     {
-        return Ok("Not implemented");
+        if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password))
+        {
+            return BadRequest("The information was not filled in correctly");
+        }
+
+        LoginResult loginResult = _userService.Login(user);
+
+        if (loginResult == LoginResult.UserNotFound)
+        {
+            return Unauthorized("Invalid credentials");
+        }
+
+        if (loginResult == LoginResult.InvalidPassword)
+        {
+            return Unauthorized("Invalid password");
+        }
+
+        return Ok("Login valid!");
     }
 
 }

@@ -14,9 +14,9 @@ public static class PasswordHashHelper
         }
     }
 
-    public static bool VerifyHash(string password, string savedHash)
+    public static bool IsInputPasswordCorrect(string inputPassword, string savedPasswordHash)
     {
-        string inputHash = CreateHash(password);
-        return inputHash == savedHash;
+        string inputPasswordHash = CreateHash(inputPassword);
+        return inputPasswordHash == savedPasswordHash;
     }
 }

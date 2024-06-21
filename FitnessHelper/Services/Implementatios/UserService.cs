@@ -32,7 +32,21 @@ public class UserService : IUserService
 
     public LoginResult Login(UserLoginModel userLoginModel)
     {
-        throw new NotImplementedException();
+        string? passwordSavedHash = _userRepository.GetByUsername(userLoginModel.Username).PasswordHash;
+
+        if (string.IsNullOrEmpty(passwordSavedHash))
+        {
+            return LoginResult.UserNotFound;
+        }
+
+        var isInputPasswordCorrect = PasswordHashHelper.IsInputPasswordCorrect(userLoginModel.Password, passwordSavedHash);
+
+        if (isInputPasswordCorrect == false)
+        {
+            return LoginResult.InvalidPassword;
+        }
+
+        return LoginResult.ValidLogin;
     }
 
 
