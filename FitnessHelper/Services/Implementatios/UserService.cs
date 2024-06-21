@@ -22,6 +22,7 @@ public class UserService : IUserService
 
         var newUser = new UserModel
         {
+            Name = userRegisterModel.Name,
             Username = userRegisterModel.Username,
             PasswordHash = hashedPassword
         };

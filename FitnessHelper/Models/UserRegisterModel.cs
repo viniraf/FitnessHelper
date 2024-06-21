@@ -8,8 +8,6 @@ public class UserRegisterModel
 
     public string Password { get; set; } = string.Empty;
 
-    public string PasswordHash { get; set; } = string.Empty;
-
     public UserRegisterModel()
     {
         

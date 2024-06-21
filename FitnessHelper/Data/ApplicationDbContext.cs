@@ -19,9 +19,9 @@ public class ApplicationDbContext : DbContext
             model.ToTable("Users");
             model.HasKey(user => user.Id);
             model.Property(user => user.Id).ValueGeneratedOnAdd();
-            model.Property(user => user.Name).IsRequired().HasMaxLength(50);
-            model.Property(user => user.Username).IsRequired().HasMaxLength(50);
-            model.Property(user => user.PasswordHash).IsRequired().HasMaxLength(50);
+            model.Property(user => user.Name).IsRequired().HasColumnType("varchar(50)");
+            model.Property(user => user.Username).IsRequired().HasColumnType("varchar(50)");
+            model.Property(user => user.PasswordHash).IsRequired().HasColumnType("varchar(50)");
         });
     }
 }
