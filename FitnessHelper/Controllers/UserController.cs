@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using FitnessHelper.Enums;
+using FitnessHelper.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FitnessHelper.Controllers;
 
@@ -53,7 +55,11 @@ public class UserController : ControllerBase
             return Unauthorized("Invalid password");
         }
 
-        return Ok("Login valid!");
+        // Generate JWT token
+        var jwtHelper = new JwtHelper();
+        var token = jwtHelper.GenerateToken(user.Username);
+
+        return Ok($"Token: {token}");
     }
 
 }
