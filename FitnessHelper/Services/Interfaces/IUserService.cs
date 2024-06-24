@@ -8,4 +8,6 @@ public interface IUserService
     public void Register(UserRegisterModel userRegisterModel);
 
     public LoginResult Login(UserLoginModel userLoginModel);
+
+    public string GenerateToken(string username);
 }
