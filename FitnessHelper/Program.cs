@@ -1,5 +1,7 @@
 using DotNetEnv;
 using FitnessHelper.Data;
+using FitnessHelper.Helpers.Implementations;
+using FitnessHelper.Helpers.Interfaces;
 using FitnessHelper.Repositories.Implementations;
 using FitnessHelper.Repositories.Interfaces;
 using FitnessHelper.Services.Implementatios;
@@ -30,6 +32,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddScoped<IJwtHelper>(x => new JwtHelper(secretKey));
+builder.Services.AddScoped<IPasswordHashHelper, PasswordHashHelper>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -82,8 +87,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -103,8 +106,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-
 
 app.UseHttpsRedirection();
 

@@ -1,5 +1,6 @@
 ﻿using FitnessHelper.Enums;
-using FitnessHelper.Helpers;
+using FitnessHelper.Helpers.Implementations;
+using FitnessHelper.Helpers.Interfaces;
 using FitnessHelper.Models;
 using FitnessHelper.Repositories.Interfaces;
 using FitnessHelper.Services.Interfaces;
@@ -10,17 +11,23 @@ public class UserService : IUserService
 {
 
     private readonly IUserRepository _userRepository;
+    private readonly IJwtHelper _jwtHelper;
+    private readonly IPasswordHashHelper _passwordHashHelper;
 
-    public UserService(IUserRepository userRepository)
+
+    public UserService(IUserRepository userRepository, IPasswordHashHelper passwordHashHelper,IJwtHelper jwtHelper)
     {
         _userRepository = userRepository;
+        _passwordHashHelper = passwordHashHelper;
+        _jwtHelper = jwtHelper;
+
     }
 
     public void Register(UserRegisterModel userRegisterModel)
     {
-        var hashedPassword = PasswordHashHelper.CreateHash(userRegisterModel.Password);
+        string hashedPassword = _passwordHashHelper.CreateHash(userRegisterModel.Password);
 
-        var newUser = new UserModel
+        UserModel newUser = new UserModel
         {
             Name = userRegisterModel.Name,
             Username = userRegisterModel.Username,
@@ -39,7 +46,7 @@ public class UserService : IUserService
             return LoginResult.UserNotFound;
         }
 
-        var isInputPasswordCorrect = PasswordHashHelper.IsInputPasswordCorrect(userLoginModel.Password, passwordSavedHash);
+        bool isInputPasswordCorrect = _passwordHashHelper.IsInputPasswordCorrect(userLoginModel.Password, passwordSavedHash);
 
         if (isInputPasswordCorrect == false)
         {
@@ -49,5 +56,9 @@ public class UserService : IUserService
         return LoginResult.ValidLogin;
     }
 
-
+    public string GenerateToken(string username)
+    {
+        string token = _jwtHelper.GenerateToken(username);
+        return token;
+    }
 }
