@@ -21,6 +21,7 @@ public class BasalMetabolicRateController : ControllerBase
     [HttpGet]
     public IActionResult BasalMetabolicRate([FromQuery] Sex sex, double weight, double height, int age, [FromQuery] ExerciseTimesPerWeek exerciseTimesPerWeek)
     {
-        return Ok();
+        int roundedBasalMetabolicRate = _basalMetabolicRateService.CalculateBasalMetabolicRate(sex, weight, height, age, exerciseTimesPerWeek);
+        return Ok($"Basal Metabolic Rate: {roundedBasalMetabolicRate}");
     }
 }
