@@ -7,20 +7,20 @@ using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace FitnessHelper.Controllers;
 
-[Route("api/basal-metabolic-rate")]
+[Route("api/calculation")]
 [SwaggerControllerOrder(2)]
 [ApiController]
-public class BasalMetabolicRateController : ControllerBase
+public class CalculationController : ControllerBase
 {
-    private readonly IBasalMetabolicRateService _basalMetabolicRateService;
+    private readonly ICalculationService _basalMetabolicRateService;
 
-    public BasalMetabolicRateController(IBasalMetabolicRateService basalMetabolicRateService)
+    public CalculationController(ICalculationService basalMetabolicRateService)
     {
         _basalMetabolicRateService = basalMetabolicRateService;
     }
 
-    [SwaggerOperation(Tags = ["Basal Metabolic Rate"])]
-    [HttpGet]
+
+    [HttpGet("basal-metabolic-rate")]
     public IActionResult BasalMetabolicRate([FromQuery] Sex sex, double weight, double height, int age, [FromQuery] ExerciseTimesPerWeek exerciseTimesPerWeek)
     {
         int roundedBasalMetabolicRate = _basalMetabolicRateService.CalculateBasalMetabolicRate(sex, weight, height, age, exerciseTimesPerWeek);

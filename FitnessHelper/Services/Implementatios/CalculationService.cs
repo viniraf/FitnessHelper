@@ -4,7 +4,7 @@ using FitnessHelper.Services.Interfaces;
 
 namespace FitnessHelper.Services.Implementatios;
 
-public class BasalMetabolicRateService : IBasalMetabolicRateService
+public class CalculationService : ICalculationService
 {
     public int CalculateBasalMetabolicRate(Sex sex, double weight, double height, int age, ExerciseTimesPerWeek exerciseTimesPerWeek)
     {
