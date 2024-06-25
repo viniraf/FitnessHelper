@@ -7,11 +7,14 @@ using FitnessHelper.Repositories.Interfaces;
 using FitnessHelper.Services.Implementatios;
 using FitnessHelper.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using System.Reflection;
 using System.Text;
+using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +27,7 @@ string connectionString = Env.GetString("CONNECTION_STRING");
 var secretKey = Env.GetString("JWT_SECRET_KEY");
 
 // Add services to the container.
+SwaggerControllerOrder<ControllerBase> swaggerControllerOrder = new SwaggerControllerOrder<ControllerBase>(Assembly.GetEntryAssembly());
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -32,6 +36,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "FitnessHelper", Version = "v1" });
     c.EnableAnnotations();
+    c.OrderActionsBy((apiDesc) => $"{swaggerControllerOrder.SortKey(apiDesc.ActionDescriptor.RouteValues["controller"])}");
 
     // Define the BearerAuth scheme
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

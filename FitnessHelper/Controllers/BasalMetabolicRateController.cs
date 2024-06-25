@@ -3,10 +3,12 @@ using FitnessHelper.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace FitnessHelper.Controllers;
 
 [Route("api/basal-metabolic-rate")]
+[SwaggerControllerOrder(2)]
 [ApiController]
 public class BasalMetabolicRateController : ControllerBase
 {

@@ -7,10 +7,12 @@ using FitnessHelper.Enums;
 using FitnessHelper.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using FitnessHelper.Helpers.Implementations;
+using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace FitnessHelper.Controllers;
 
 [Route("api/user")]
+[SwaggerControllerOrder(1)]
 [ApiController]
 public class UserController : ControllerBase
 {
