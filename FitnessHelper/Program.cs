@@ -69,7 +69,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IJwtHelper>(x => new JwtHelper(secretKey));
 builder.Services.AddScoped<IPasswordHashHelper, PasswordHashHelper>();
-builder.Services.AddScoped<IBasalMetabolicRateService, BasalMetabolicRateService>();
+builder.Services.AddScoped<ICalculationService, CalculationService>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {

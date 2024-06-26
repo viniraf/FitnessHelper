@@ -1,10 +1,11 @@
 ﻿using FitnessHelper.Dictionaries;
 using FitnessHelper.Enums;
+using FitnessHelper.Models;
 using FitnessHelper.Services.Interfaces;
 
 namespace FitnessHelper.Services.Implementatios;
 
-public class BasalMetabolicRateService : IBasalMetabolicRateService
+public class CalculationService : ICalculationService
 {
     public int CalculateBasalMetabolicRate(Sex sex, double weight, double height, int age, ExerciseTimesPerWeek exerciseTimesPerWeek)
     {
@@ -29,6 +30,49 @@ public class BasalMetabolicRateService : IBasalMetabolicRateService
         return roundedBasalMetabolicRate;
     }
 
+    public MacronutrientCalculationModel CalculateMacronutrient(int basalMetabolicRate, double weight, Goal goal)
+    {
+        double goalBMR = 0;
+        string goalString = "";
+
+        SetValuesByGoal(basalMetabolicRate, goal, ref goalBMR, ref goalString);
+
+        double totalCal = goalBMR;
+
+        double protGrams = weight * 1.8;
+
+        totalCal = totalCal - (protGrams * 4);
+
+        double fatGrams = weight;
+
+        totalCal = totalCal - (fatGrams * 8);
+
+        double carbGrams = totalCal / 4;
+
+        MacronutrientCalculationModel macronutrientCalculationModel = new MacronutrientCalculationModel(basalMetabolicRate, goalString, goalBMR, protGrams, carbGrams, fatGrams);
+
+        return macronutrientCalculationModel;
+    }
+
+    private static void SetValuesByGoal(int basalMetabolicRate, Goal goal, ref double goalBMR, ref string goalString)
+    {
+        if (goal == Goal.GainWeight)
+        {
+            goalBMR = basalMetabolicRate + 500;
+            goalString = "Gain Weight";
+        }
+        else if (goal == Goal.LoseWeight)
+        {
+            goalBMR = basalMetabolicRate - 500;
+            goalString = "Lose Weight";
+        }
+        else if (goal == Goal.MaintainWeight)
+        {
+            goalBMR = basalMetabolicRate;
+            goalString = "Maintain Weight";
+        }
+    }
+
     private double CalculateMaleBasalMetabolicRate(double weight, double height, int age, ExerciseTimesPerWeek exerciseTimesPerWeek)
     {
         double maleBasalMetabolicRate = (10 * weight) + (6.25 * height) - (5 * age) + 5;
@@ -42,4 +86,6 @@ public class BasalMetabolicRateService : IBasalMetabolicRateService
 
         return femaleBasalMetabolicRate;
     }
+
+
 }
