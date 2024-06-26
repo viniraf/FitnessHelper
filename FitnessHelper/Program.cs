@@ -71,6 +71,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJwtHelper>(x => new JwtHelper(secretKey));
 builder.Services.AddScoped<IPasswordHashHelper, PasswordHashHelper>();
 builder.Services.AddScoped<ICalculationService, CalculationService>();
+builder.Services.AddScoped<ITrainingService, TrainingService>();
+builder.Services.AddScoped<ITrainingRepository, TrainingRepository>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
