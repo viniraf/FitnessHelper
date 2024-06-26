@@ -1,4 +1,5 @@
 ﻿using FitnessHelper.Enums;
+using FitnessHelper.Models;
 using FitnessHelper.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,18 +13,24 @@ namespace FitnessHelper.Controllers;
 [ApiController]
 public class CalculationController : ControllerBase
 {
-    private readonly ICalculationService _basalMetabolicRateService;
+    private readonly ICalculationService _calculationService;
 
-    public CalculationController(ICalculationService basalMetabolicRateService)
+    public CalculationController(ICalculationService calculationService)
     {
-        _basalMetabolicRateService = basalMetabolicRateService;
+        _calculationService = calculationService;
     }
-
 
     [HttpGet("basal-metabolic-rate")]
     public IActionResult BasalMetabolicRate([FromQuery] Sex sex, double weight, double height, int age, [FromQuery] ExerciseTimesPerWeek exerciseTimesPerWeek)
     {
-        int roundedBasalMetabolicRate = _basalMetabolicRateService.CalculateBasalMetabolicRate(sex, weight, height, age, exerciseTimesPerWeek);
+        int roundedBasalMetabolicRate = _calculationService.CalculateBasalMetabolicRate(sex, weight, height, age, exerciseTimesPerWeek);
         return Ok($"Basal Metabolic Rate: {roundedBasalMetabolicRate}");
+    }
+
+    [HttpGet("macronutrient")]
+    public IActionResult Macronutrient([FromQuery] int basalMetabolicRate, [FromQuery] double weight, [FromQuery] Goal goal)
+    {
+        MacronutrientCalculationModel macronutrientCalculationModel = _calculationService.CalculateMacronutrient(basalMetabolicRate, weight, goal);
+        return Ok(macronutrientCalculationModel);
     }
 }
