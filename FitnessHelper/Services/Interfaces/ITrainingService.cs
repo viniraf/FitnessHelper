@@ -4,11 +4,11 @@ namespace FitnessHelper.Services.Interfaces;
 
 public interface ITrainingService
 {
-    public Task<TrainingModel> GetAll();
+    public List<TrainingModel> GetAll();
 
-    public Task<TrainingModel> GetById(int id);
+    public TrainingModel GetById(int id);
 
-    public void Create(TrainingModel trainingModel);
+    public void Create(TrainingRequestModel trainingRequestModel);
 
-    public void Update(TrainingModel trainingModel);
+    public void Update(int id, TrainingUpdateRequestModel trainingUpdateRequestModel);
 }

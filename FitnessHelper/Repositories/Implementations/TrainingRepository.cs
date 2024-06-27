@@ -1,28 +1,38 @@
-﻿using FitnessHelper.Models;
+﻿using FitnessHelper.Data;
+using FitnessHelper.Models;
 using FitnessHelper.Repositories.Interfaces;
 
 namespace FitnessHelper.Repositories.Implementations;
 
 public class TrainingRepository : ITrainingRepository
 {
+    private readonly ApplicationDbContext _applicationDbContext;
 
-    public Task<TrainingModel> GetAll()
+    public TrainingRepository(ApplicationDbContext applicationDbContext)
     {
-        throw new NotImplementedException();
+        _applicationDbContext = applicationDbContext;
     }
 
-    public Task<TrainingModel> GetById(int id)
+    public List<TrainingModel> GetAll()
     {
-        throw new NotImplementedException();
+        List<TrainingModel> trainings = _applicationDbContext.Trainings.ToList();
+        return trainings;
+    }
+
+    public TrainingModel GetById(int id)
+    {
+       var training = _applicationDbContext.Trainings.FirstOrDefault(x => x.Id == id);
+       return training;
     }
 
     public void Create(TrainingModel trainingModel)
     {
-        throw new NotImplementedException();
+        _applicationDbContext.Trainings.Add(trainingModel);
+        _applicationDbContext.SaveChanges();
     }
 
-    public void Update(TrainingModel trainingModel)
+    public void Update()
     {
-        throw new NotImplementedException();
+        _applicationDbContext.SaveChanges();
     }
 }

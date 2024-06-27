@@ -1,29 +1,57 @@
 ﻿using FitnessHelper.Models;
+using FitnessHelper.Repositories.Interfaces;
 using FitnessHelper.Services.Interfaces;
 
 namespace FitnessHelper.Services.Implementatios;
 
 public class TrainingService : ITrainingService
 {
+    private readonly ITrainingRepository _trainingRepository;
 
-    public Task<TrainingModel> GetAll()
+    public TrainingService(ITrainingRepository trainingRepository)
     {
-        throw new NotImplementedException();
+        _trainingRepository = trainingRepository;
     }
 
-    public Task<TrainingModel> GetById(int id)
+    public List<TrainingModel> GetAll()
     {
-        throw new NotImplementedException();
+        List<TrainingModel> trainings = _trainingRepository.GetAll();
+
+        if (trainings.Count == 0)
+        {
+            return new List<TrainingModel>();
+        }
+
+        return trainings;
     }
 
-    public void Create(TrainingModel trainingModel)
+    public TrainingModel GetById(int id)
     {
-        throw new NotImplementedException();
+        TrainingModel training = _trainingRepository.GetById(id);
+
+        return training;
     }
 
-    public void Update(TrainingModel trainingModel)
+    public void Create(TrainingRequestModel trainingRequestModel)
     {
-        throw new NotImplementedException();
+        var trainingModel = new TrainingModel
+        {
+            Title = trainingRequestModel.Title,
+            CreateDate = DateTime.Now,
+            IsActive = trainingRequestModel.IsActive
+        };
+
+        _trainingRepository.Create(trainingModel);
+    }
+
+    public void Update(int id, TrainingUpdateRequestModel trainingUpdateRequestModel)
+    {
+        TrainingModel trainingInDb = _trainingRepository.GetById(id);
+
+        trainingInDb.Title = trainingUpdateRequestModel.Title;
+        trainingInDb.IsActive = trainingUpdateRequestModel.IsActive;
+
+        _trainingRepository.Update();
     }
 }
 
