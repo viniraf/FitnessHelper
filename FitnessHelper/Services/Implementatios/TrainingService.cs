@@ -22,6 +22,28 @@ public class TrainingService : ITrainingService
             return new List<TrainingModel>();
         }
 
+        var exercises = _trainingRepository.GetAllExercises();
+
+        // Crie um dicionário para mapear os exercícios por TrainingId
+        var exercisesByTrainingId = exercises.GroupBy(e => e.TrainingId)
+                                              .ToDictionary(g => g.Key, g => g.ToList());
+
+        // Associe os exercícios aos treinamentos
+        foreach (var training in trainings)
+        {
+            if (exercisesByTrainingId.TryGetValue(training.Id, out var associatedExercises))
+            {
+                training.Exercises = associatedExercises;
+            }
+            else
+            {
+                // Se não houver exercícios associados, defina a lista como vazia
+                training.Exercises = new List<ExerciseModel>();
+            }
+        }
+
+        // Agora a lista de treinamentos contém os exercícios associados
+
         return trainings;
     }
 
@@ -51,7 +73,7 @@ public class TrainingService : ITrainingService
         trainingInDb.Title = trainingUpdateRequestModel.Title;
         trainingInDb.IsActive = trainingUpdateRequestModel.IsActive;
 
-        _trainingRepository.Update();
+        _trainingRepository.Update(trainingInDb);
     }
 }
 
