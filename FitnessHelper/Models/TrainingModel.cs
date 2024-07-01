@@ -10,6 +10,9 @@ public class TrainingModel
 
     public bool IsActive { get; set; }
 
+    // Navigation property
+    public List<ExerciseModel> Exercises { get; set; }
+
     public TrainingModel()
     {
         

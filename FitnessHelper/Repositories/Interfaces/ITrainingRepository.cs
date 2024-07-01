@@ -10,5 +10,7 @@ public interface ITrainingRepository
 
     public void Create(TrainingModel trainingModel);
 
-    public void Update();
+    public void Update(TrainingModel trainingModel);
+
+    public List<ExerciseModel> GetAllExercises();
 }

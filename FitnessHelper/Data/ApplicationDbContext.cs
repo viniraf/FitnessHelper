@@ -14,6 +14,8 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<TrainingModel> Trainings { get; set; }
 
+    public DbSet<ExerciseModel> Exercises { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<UserModel>(model =>
@@ -34,6 +36,22 @@ public class ApplicationDbContext : DbContext
             model.Property(training => training.Title).IsRequired().HasColumnType("varchar(50)"); 
             model.Property(training => training.CreateDate).IsRequired().HasColumnType("datetime"); 
             model.Property(training => training.IsActive).IsRequired().HasColumnType("bit");
+        });
+
+        modelBuilder.Entity<ExerciseModel>(model => 
+        {
+            model.ToTable("Exercises");
+            model.HasKey(exercise =>  exercise.Id);
+            model.Property(exercise => exercise.Id).ValueGeneratedOnAdd();
+            model.Property(exercise => exercise.Exercise).IsRequired().HasColumnType("varchar(50)");
+            model.Property(exercise => exercise.QtySets).IsRequired().HasColumnType("int");
+            model.Property(exercise => exercise.QtyReps).IsRequired().HasColumnType("int");
+            model.Property(exercise => exercise.IsActive).IsRequired().HasColumnType("bit");
+
+            // Defines the relationship with the "Trainings" table
+            model.HasOne(exercise => exercise.Training)
+                .WithMany(training => training.Exercises) // Indicates that a training can have multiple exercises
+                .HasForeignKey(exercise => exercise.TrainingId); // Foreign Key for TrainingId
         });
     }
 }

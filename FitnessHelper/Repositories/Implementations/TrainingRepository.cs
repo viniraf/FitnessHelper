@@ -31,8 +31,16 @@ public class TrainingRepository : ITrainingRepository
         _applicationDbContext.SaveChanges();
     }
 
-    public void Update()
+    public void Update(TrainingModel trainingModel)
     {
+        _applicationDbContext.Update(trainingModel);
         _applicationDbContext.SaveChanges();
+    }
+
+    public List<ExerciseModel> GetAllExercises()
+    {
+        var exercises = _applicationDbContext.Exercises.ToList();
+
+        return exercises;
     }
 }
