@@ -66,5 +66,13 @@ public class ApplicationDbContext : DbContext
                 .WithMany(training => training.TrainingHistories)
                 .HasForeignKey(trainingHistory => trainingHistory.TrainingId);
         });
+
+        modelBuilder.Entity<WeighingHistoryModel>(model =>
+        {
+            model.ToTable("WeighingHistory");
+            model.HasKey(weighingHistory =>  weighingHistory.Id);
+            model.Property(weighingHistory => weighingHistory.Date).IsRequired();
+            model.Property(weighingHistory => weighingHistory.Weight).IsRequired().HasColumnType("decimal(4,2)");
+        });
     }
 }
