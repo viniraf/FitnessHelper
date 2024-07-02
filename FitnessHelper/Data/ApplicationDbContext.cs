@@ -16,6 +16,8 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<ExerciseModel> Exercises { get; set; }
 
+    public DbSet<TrainingHistoryModel> TrainingHistories { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<UserModel>(model =>
@@ -52,6 +54,25 @@ public class ApplicationDbContext : DbContext
             model.HasOne(exercise => exercise.Training)
                 .WithMany(training => training.Exercises) // Indicates that a training can have multiple exercises
                 .HasForeignKey(exercise => exercise.TrainingId); // Foreign Key for TrainingId
+        });
+
+        modelBuilder.Entity<TrainingHistoryModel>(model =>
+        {
+            model.ToTable("TrainingHistory");
+            model.HasKey(trainingHistory =>  trainingHistory.Id);
+            model.Property(trainingHistory => trainingHistory.Date).IsRequired();
+
+            model.HasOne(trainingHistory => trainingHistory.Training)
+                .WithMany(training => training.TrainingHistories)
+                .HasForeignKey(trainingHistory => trainingHistory.TrainingId);
+        });
+
+        modelBuilder.Entity<WeighingHistoryModel>(model =>
+        {
+            model.ToTable("WeighingHistory");
+            model.HasKey(weighingHistory =>  weighingHistory.Id);
+            model.Property(weighingHistory => weighingHistory.Date).IsRequired();
+            model.Property(weighingHistory => weighingHistory.Weight).IsRequired().HasColumnType("decimal(4,2)");
         });
     }
 }
