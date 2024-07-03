@@ -58,7 +58,8 @@ public class UserController : ControllerBase
             return Unauthorized("Invalid password");
         }
 
-        string token = _userService.GenerateToken(user.Username);
+        int userId = _userService.GetByUsername(user.Username).Id;
+        string token = _userService.GenerateToken(userId);
 
         return Ok($"Token: {token}");
     }

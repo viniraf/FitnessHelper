@@ -13,14 +13,14 @@ public class ExerciseService : IExerciseService
         _exerciseRepository = exerciseRepository;
     }
 
-    public ExerciseModel GetById(int id)
+    public ExerciseModel GetById(int userId, int id)
     {
-        var exercise = _exerciseRepository.GetById(id);
+        var exercise = _exerciseRepository.GetById(userId, id);
 
         return exercise;
     }
 
-    public void AddExercise(int trainingId, ExerciseRequestModel exerciseRequestModel)
+    public void AddExercise(int userId, int trainingId, ExerciseRequestModel exerciseRequestModel)
     {
         var exercise = new ExerciseModel();
         exercise.Exercise = exerciseRequestModel.Exercise;
@@ -28,13 +28,14 @@ public class ExerciseService : IExerciseService
         exercise.QtySets = exerciseRequestModel.QtySets;
         exercise.QtyReps = exerciseRequestModel.QtyReps;
         exercise.IsActive = true;
+        exercise.UserId = userId;
 
         _exerciseRepository.AddExercise(exercise);
     }
 
-    public void UpdateExercise(int id, ExerciseRequestModel exerciseRequestModel)
+    public void UpdateExercise(int userId, int id, ExerciseRequestModel exerciseRequestModel)
     {
-        var exercise = _exerciseRepository.GetById(id);
+        var exercise = _exerciseRepository.GetById(userId, id);
 
         exercise.Exercise = exerciseRequestModel.Exercise;
         exercise.QtySets = exerciseRequestModel.QtySets;

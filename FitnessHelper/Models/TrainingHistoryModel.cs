@@ -10,6 +10,8 @@ public class TrainingHistoryModel
 
     public int TrainingId { get; set; }
 
+    public int UserId { get; set; }
+
     [JsonIgnore]
     public TrainingModel Training { get; set; }
 }

@@ -12,6 +12,9 @@ public class TrainingModel
 
     public bool IsActive { get; set; }
 
+    [JsonIgnore]
+    public int UserId { get; set; }
+
     // Navigation property
     public List<ExerciseModel> Exercises { get; set; }
 

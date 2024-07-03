@@ -2,6 +2,7 @@
 using FitnessHelper.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace FitnessHelper.Controllers;
@@ -26,7 +27,9 @@ public class ExerciseController : ControllerBase
             return BadRequest("Fill in the information correctly");
         }
 
-        _exerciseService.AddExercise(trainingId, exerciseRequestModel);
+        int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+        _exerciseService.AddExercise(userId, trainingId, exerciseRequestModel);
 
         return NoContent();
     }
@@ -39,14 +42,16 @@ public class ExerciseController : ControllerBase
             return BadRequest("Fill in the information correctly");
         }
 
-        var exercise = _exerciseService.GetById(id);
+        int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+        var exercise = _exerciseService.GetById(userId, id);
 
         if (exercise == null)
         {
             return NotFound($"There is no exercise with Id {id}");
         }
 
-        _exerciseService.UpdateExercise(id, exerciseRequestModel);
+        _exerciseService.UpdateExercise(userId, id, exerciseRequestModel);
 
         return NoContent();
     }

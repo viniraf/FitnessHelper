@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Net.Http;
+using System.Security.Claims;
 using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace FitnessHelper.Controllers
@@ -25,7 +27,9 @@ namespace FitnessHelper.Controllers
         [Authorize]
         public IActionResult Get()
         {
-            List<TrainingModel> trainings = _trainingService.GetAll();
+            int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            List<TrainingModel> trainings = _trainingService.GetAll(userId);
             return Ok(trainings);
         }
 
@@ -33,7 +37,9 @@ namespace FitnessHelper.Controllers
         [Authorize]
         public IActionResult Get(int id)
         {
-            TrainingModel training = _trainingService.GetById(id);
+            int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            TrainingModel training = _trainingService.GetById(userId, id);
 
             if (training == null)
             {
@@ -52,7 +58,9 @@ namespace FitnessHelper.Controllers
                 return BadRequest("Fill in the information correctly");
             }
 
-            _trainingService.Create(trainingRequestModel);
+            int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            _trainingService.Create(userId, trainingRequestModel);
 
             return Ok("Training was created successfully");
         }
@@ -61,14 +69,16 @@ namespace FitnessHelper.Controllers
         [Authorize]
         public IActionResult Put(int id, TrainingUpdateRequestModel trainingUpdateRequestModel)
         {
-            TrainingModel training = _trainingService.GetById(id);
+            int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            TrainingModel training = _trainingService.GetById(userId, id);
 
             if (training == null)
             {
                 return NotFound($"There is no training with Id {id}");
             }
-
-            _trainingService.Update(id, trainingUpdateRequestModel);
+            
+            _trainingService.Update(userId, id, trainingUpdateRequestModel);
 
             return Ok($"Update training by id: {id}");
         }

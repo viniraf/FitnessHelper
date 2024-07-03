@@ -2,5 +2,5 @@
 
 public interface IJwtHelper
 {
-    string GenerateToken(string username);
+    string GenerateToken(int userId);
 }

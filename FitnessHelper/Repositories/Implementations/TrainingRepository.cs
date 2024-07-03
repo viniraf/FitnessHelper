@@ -13,15 +13,15 @@ public class TrainingRepository : ITrainingRepository
         _applicationDbContext = applicationDbContext;
     }
 
-    public List<TrainingModel> GetAll()
+    public List<TrainingModel> GetAll(int userId)
     {
-        List<TrainingModel> trainings = _applicationDbContext.Trainings.ToList();
+        List<TrainingModel> trainings = _applicationDbContext.Trainings.Where(t => t.UserId == userId).ToList();
         return trainings;
     }
 
-    public TrainingModel GetById(int id)
+    public TrainingModel GetById(int userId, int id)
     {
-       var training = _applicationDbContext.Trainings.FirstOrDefault(x => x.Id == id);
+       var training = _applicationDbContext.Trainings.FirstOrDefault(t => t.UserId == userId && t.Id == id);
        return training;
     }
 
@@ -37,9 +37,9 @@ public class TrainingRepository : ITrainingRepository
         _applicationDbContext.SaveChanges();
     }
 
-    public List<ExerciseModel> GetAllExercises()
+    public List<ExerciseModel> GetAllExercises(int userId)
     {
-        var exercises = _applicationDbContext.Exercises.ToList();
+        var exercises = _applicationDbContext.Exercises.Where(e => e.UserId == userId).ToList();
 
         return exercises;
     }

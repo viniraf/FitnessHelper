@@ -13,16 +13,16 @@ public class TrainingService : ITrainingService
         _trainingRepository = trainingRepository;
     }
 
-    public List<TrainingModel> GetAll()
+    public List<TrainingModel> GetAll(int userId)
     {
-        List<TrainingModel> trainings = _trainingRepository.GetAll();
+        List<TrainingModel> trainings = _trainingRepository.GetAll(userId);
 
         if (trainings.Count == 0)
         {
             return new List<TrainingModel>();
         }
 
-        var exercises = _trainingRepository.GetAllExercises();
+        var exercises = _trainingRepository.GetAllExercises(userId);
 
         // Crie um dicionário para mapear os exercícios por TrainingId
         var exercisesByTrainingId = exercises.GroupBy(e => e.TrainingId)
@@ -47,28 +47,29 @@ public class TrainingService : ITrainingService
         return trainings;
     }
 
-    public TrainingModel GetById(int id)
+    public TrainingModel GetById(int userId, int id)
     {
-        TrainingModel training = _trainingRepository.GetById(id);
+        TrainingModel training = _trainingRepository.GetById(userId, id);
 
         return training;
     }
 
-    public void Create(TrainingRequestModel trainingRequestModel)
+    public void Create(int userId, TrainingRequestModel trainingRequestModel)
     {
         var trainingModel = new TrainingModel
         {
             Title = trainingRequestModel.Title,
             CreateDate = DateTime.Now,
-            IsActive = trainingRequestModel.IsActive
+            IsActive = trainingRequestModel.IsActive,
+            UserId = userId,
         };
 
         _trainingRepository.Create(trainingModel);
     }
 
-    public void Update(int id, TrainingUpdateRequestModel trainingUpdateRequestModel)
+    public void Update(int userId, int id, TrainingUpdateRequestModel trainingUpdateRequestModel)
     {
-        TrainingModel trainingInDb = _trainingRepository.GetById(id);
+        TrainingModel trainingInDb = _trainingRepository.GetById(userId, id);
 
         trainingInDb.Title = trainingUpdateRequestModel.Title;
         trainingInDb.IsActive = trainingUpdateRequestModel.IsActive;

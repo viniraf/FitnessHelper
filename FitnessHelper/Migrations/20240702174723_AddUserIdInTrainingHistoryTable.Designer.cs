@@ -4,6 +4,7 @@ using FitnessHelper.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessHelper.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240702174723_AddUserIdInTrainingHistoryTable")]
+    partial class AddUserIdInTrainingHistoryTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,15 +151,10 @@ namespace FitnessHelper.Migrations
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Weight")
                         .HasColumnType("decimal(4,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("WeighingHistory", (string)null);
                 });
@@ -196,15 +194,6 @@ namespace FitnessHelper.Migrations
                 });
 
             modelBuilder.Entity("FitnessHelper.Models.TrainingModel", b =>
-                {
-                    b.HasOne("FitnessHelper.Models.UserModel", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FitnessHelper.Models.WeighingHistoryModel", b =>
                 {
                     b.HasOne("FitnessHelper.Models.UserModel", null)
                         .WithMany()
