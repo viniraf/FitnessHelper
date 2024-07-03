@@ -19,8 +19,8 @@ public class ExerciseController : ControllerBase
         _exerciseService = exerciseService;
     }
 
-    [HttpPost("{trainingId}")]
-    public IActionResult AddExercise(int trainingId, ExerciseRequestModel exerciseRequestModel)
+    [HttpPost]
+    public IActionResult AddExercise(ExerciseRequestModel exerciseRequestModel)
     {
         if (exerciseRequestModel == null)
         {
@@ -29,7 +29,7 @@ public class ExerciseController : ControllerBase
 
         int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-        _exerciseService.AddExercise(userId, trainingId, exerciseRequestModel);
+        _exerciseService.AddExercise(userId, exerciseRequestModel);
 
         return NoContent();
     }
@@ -48,7 +48,7 @@ public class ExerciseController : ControllerBase
 
         if (exercise == null)
         {
-            return NotFound($"There is no exercise with Id {id}");
+            return NotFound();
         }
 
         _exerciseService.UpdateExercise(userId, id, exerciseRequestModel);
