@@ -21,7 +21,7 @@ public class TrainingRepository : ITrainingRepository
 
     public TrainingModel GetById(int userId, int id)
     {
-       var training = _applicationDbContext.Trainings.FirstOrDefault(t => t.UserId == userId && t.Id == id);
+        TrainingModel? training = _applicationDbContext.Trainings.FirstOrDefault(t => t.UserId == userId && t.Id == id);
        return training;
     }
 
@@ -39,7 +39,7 @@ public class TrainingRepository : ITrainingRepository
 
     public List<ExerciseModel> GetAllExercises(int userId)
     {
-        var exercises = _applicationDbContext.Exercises.Where(e => e.UserId == userId).ToList();
+        List<ExerciseModel> exercises = _applicationDbContext.Exercises.Where(e => e.UserId == userId).ToList();
 
         return exercises;
     }

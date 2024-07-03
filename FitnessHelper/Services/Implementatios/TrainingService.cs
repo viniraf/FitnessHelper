@@ -22,28 +22,23 @@ public class TrainingService : ITrainingService
             return new List<TrainingModel>();
         }
 
-        var exercises = _trainingRepository.GetAllExercises(userId);
+        List<ExerciseModel> exercises = _trainingRepository.GetAllExercises(userId);
 
-        // Crie um dicionário para mapear os exercícios por TrainingId
-        var exercisesByTrainingId = exercises.GroupBy(e => e.TrainingId)
+
+        Dictionary<int, List<ExerciseModel>> exercisesByTrainingId = exercises.GroupBy(e => e.TrainingId)
                                               .ToDictionary(g => g.Key, g => g.ToList());
 
-        // Associe os exercícios aos treinamentos
-        foreach (var training in trainings)
+        foreach (TrainingModel training in trainings)
         {
-            if (exercisesByTrainingId.TryGetValue(training.Id, out var associatedExercises))
+            if (exercisesByTrainingId.TryGetValue(training.Id, out List<ExerciseModel>? associatedExercises))
             {
                 training.Exercises = associatedExercises;
             }
             else
             {
-                // Se não houver exercícios associados, defina a lista como vazia
                 training.Exercises = new List<ExerciseModel>();
             }
         }
-
-        // Agora a lista de treinamentos contém os exercícios associados
-
         return trainings;
     }
 
@@ -56,7 +51,7 @@ public class TrainingService : ITrainingService
 
     public void Create(int userId, TrainingRequestModel trainingRequestModel)
     {
-        var trainingModel = new TrainingModel
+        TrainingModel trainingModel = new TrainingModel
         {
             TrainingTitle = trainingRequestModel.TrainingTitle,
             CreateDate = DateOnly.FromDateTime(DateTime.Now),

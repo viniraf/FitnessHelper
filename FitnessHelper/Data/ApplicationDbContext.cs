@@ -58,10 +58,9 @@ public class ApplicationDbContext : DbContext
             model.Property(exercise => exercise.IsActive).IsRequired().HasColumnType("bit");
             model.Property(exercise => exercise.UserId).IsRequired().HasColumnType("int");
 
-            // Defines the relationship with the "Trainings" table
             model.HasOne(exercise => exercise.Training)
-                .WithMany(training => training.Exercises) // Indicates that a training can have multiple exercises
-                .HasForeignKey(exercise => exercise.TrainingId); // Foreign Key for TrainingId
+                .WithMany(training => training.Exercises)
+                .HasForeignKey(exercise => exercise.TrainingId);
 
             model.HasOne<UserModel>()
                 .WithMany()

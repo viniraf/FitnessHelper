@@ -15,7 +15,7 @@ public class ExerciseRepository : IExerciseRepository
 
     public ExerciseModel GetById(int userId, int id)
     {
-        var exercise = _applicationDbContext.Exercises.FirstOrDefault(x => x.Id == id);
+        ExerciseModel? exercise = _applicationDbContext.Exercises.FirstOrDefault(x => x.Id == id);
 
         return exercise;
     }

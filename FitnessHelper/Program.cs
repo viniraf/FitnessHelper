@@ -26,7 +26,7 @@ Env.TraversePath().Load();
 
 // Get the database connection string from the .env file
 string connectionString = Env.GetString("CONNECTION_STRING");
-var secretKey = Env.GetString("JWT_SECRET_KEY");
+string secretKey = Env.GetString("JWT_SECRET_KEY");
 
 // Add services to the container.
 SwaggerControllerOrder<ControllerBase> swaggerControllerOrder = new SwaggerControllerOrder<ControllerBase>(Assembly.GetEntryAssembly());

@@ -19,8 +19,6 @@ public class ExerciseModel
     [JsonIgnore]
     public int UserId { get; set; }
 
-    // Navigation property
-
     [JsonIgnore]
     public TrainingModel Training { get; set; }
 }

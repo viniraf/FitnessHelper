@@ -46,7 +46,7 @@ public class HistoryService : IHistoryService
 
     public List<WeighingHistoryModel> GetWeighingHistories(int userId)
     {
-        var weighingHistories = _historyRepository.GetWeighingHistories(userId);
+        List<WeighingHistoryModel> weighingHistories = _historyRepository.GetWeighingHistories(userId);
 
         if (weighingHistories.Count > 0)
         {

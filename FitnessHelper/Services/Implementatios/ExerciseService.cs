@@ -15,14 +15,14 @@ public class ExerciseService : IExerciseService
 
     public ExerciseModel GetById(int userId, int id)
     {
-        var exercise = _exerciseRepository.GetById(userId, id);
+        ExerciseModel exercise = _exerciseRepository.GetById(userId, id);
 
         return exercise;
     }
 
     public void AddExercise(int userId, ExerciseRequestModel exerciseRequestModel)
     {
-        var exercise = new ExerciseModel();
+        ExerciseModel exercise = new ExerciseModel();
         exercise.ExerciseTitle = exerciseRequestModel.ExerciseTitle;
         exercise.TrainingId = exerciseRequestModel.TrainingId;
         exercise.QtySets = exerciseRequestModel.QtySets;
@@ -35,7 +35,7 @@ public class ExerciseService : IExerciseService
 
     public void UpdateExercise(int userId, int id, ExerciseRequestModel exerciseRequestModel)
     {
-        var exercise = _exerciseRepository.GetById(userId, id);
+        ExerciseModel exercise = _exerciseRepository.GetById(userId, id);
 
         exercise.ExerciseTitle = exerciseRequestModel.ExerciseTitle;
         exercise.QtySets = exerciseRequestModel.QtySets;
