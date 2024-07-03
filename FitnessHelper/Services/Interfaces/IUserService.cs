@@ -7,7 +7,9 @@ public interface IUserService
 {
     public void Register(UserRegisterModel userRegisterModel);
 
+    public UserModel GetByUsername(string username);
+
     public LoginResult Login(UserLoginModel userLoginModel);
 
-    public string GenerateToken(string username);
+    public string GenerateToken(int userId);
 }

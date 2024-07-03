@@ -38,6 +38,11 @@ public class ApplicationDbContext : DbContext
             model.Property(training => training.Title).IsRequired().HasColumnType("varchar(50)"); 
             model.Property(training => training.CreateDate).IsRequired().HasColumnType("datetime"); 
             model.Property(training => training.IsActive).IsRequired().HasColumnType("bit");
+            model.Property(training => training.UserId).IsRequired().HasColumnType("int");
+
+            model.HasOne<UserModel>()
+                .WithMany()
+                .HasForeignKey(t => t.UserId);
         });
 
         modelBuilder.Entity<ExerciseModel>(model => 
@@ -49,11 +54,16 @@ public class ApplicationDbContext : DbContext
             model.Property(exercise => exercise.QtySets).IsRequired().HasColumnType("int");
             model.Property(exercise => exercise.QtyReps).IsRequired().HasColumnType("int");
             model.Property(exercise => exercise.IsActive).IsRequired().HasColumnType("bit");
+            model.Property(exercise => exercise.UserId).IsRequired().HasColumnType("int");
 
             // Defines the relationship with the "Trainings" table
             model.HasOne(exercise => exercise.Training)
                 .WithMany(training => training.Exercises) // Indicates that a training can have multiple exercises
                 .HasForeignKey(exercise => exercise.TrainingId); // Foreign Key for TrainingId
+
+            model.HasOne<UserModel>()
+                .WithMany()
+                .HasForeignKey(e => e.UserId);
         });
 
         modelBuilder.Entity<TrainingHistoryModel>(model =>
@@ -61,10 +71,15 @@ public class ApplicationDbContext : DbContext
             model.ToTable("TrainingHistory");
             model.HasKey(trainingHistory =>  trainingHistory.Id);
             model.Property(trainingHistory => trainingHistory.Date).IsRequired();
+            model.Property(trainingHistory => trainingHistory.UserId).IsRequired().HasColumnType("int");
 
             model.HasOne(trainingHistory => trainingHistory.Training)
                 .WithMany(training => training.TrainingHistories)
                 .HasForeignKey(trainingHistory => trainingHistory.TrainingId);
+
+            model.HasOne<UserModel>()
+                .WithMany()
+                .HasForeignKey(th => th.UserId);
         });
 
         modelBuilder.Entity<WeighingHistoryModel>(model =>
@@ -73,6 +88,11 @@ public class ApplicationDbContext : DbContext
             model.HasKey(weighingHistory =>  weighingHistory.Id);
             model.Property(weighingHistory => weighingHistory.Date).IsRequired();
             model.Property(weighingHistory => weighingHistory.Weight).IsRequired().HasColumnType("decimal(4,2)");
+            model.Property(weighingHistory => weighingHistory.UserId).IsRequired().HasColumnType("int");
+
+            model.HasOne<UserModel>()
+                .WithMany()
+                .HasForeignKey(wh => wh.UserId);
         });
     }
 }

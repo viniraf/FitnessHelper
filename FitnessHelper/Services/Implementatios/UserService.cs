@@ -37,6 +37,12 @@ public class UserService : IUserService
         _userRepository.Register(newUser);
     }
 
+    public UserModel GetByUsername(string username)
+    {
+        UserModel user = _userRepository.GetByUsername(username);
+        return user;
+    }
+
     public LoginResult Login(UserLoginModel userLoginModel)
     {
         string? passwordSavedHash = _userRepository.GetByUsername(userLoginModel.Username).PasswordHash;
@@ -56,9 +62,9 @@ public class UserService : IUserService
         return LoginResult.ValidLogin;
     }
 
-    public string GenerateToken(string username)
+    public string GenerateToken(int userId)
     {
-        string token = _jwtHelper.GenerateToken(username);
+        string token = _jwtHelper.GenerateToken(userId);
         return token;
     }
 }

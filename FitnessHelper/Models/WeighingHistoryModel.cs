@@ -7,4 +7,6 @@ public class WeighingHistoryModel
     public DateOnly Date { get; set; }
 
     public double Weight { get; set; }
+
+    public int UserId { get; set; }
 }

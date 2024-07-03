@@ -16,6 +16,9 @@ public class ExerciseModel
 
     public bool IsActive { get; set; }
 
+    [JsonIgnore]
+    public int UserId { get; set; }
+
     // Navigation property
 
     [JsonIgnore]

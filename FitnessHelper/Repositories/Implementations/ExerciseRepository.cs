@@ -13,7 +13,7 @@ public class ExerciseRepository : IExerciseRepository
         _applicationDbContext = applicationDbContext;
     }
 
-    public ExerciseModel GetById(int id)
+    public ExerciseModel GetById(int userId, int id)
     {
         var exercise = _applicationDbContext.Exercises.FirstOrDefault(x => x.Id == id);
 
