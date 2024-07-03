@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FitnessHelper.Models;
+using FitnessHelper.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace FitnessHelper.Controllers
@@ -9,29 +12,73 @@ namespace FitnessHelper.Controllers
     [ApiController]
     public class HistoryController : ControllerBase
     {
-        [HttpPost("/training")]
-        public IActionResult PostTrainingHistory()
+        private readonly IHistoryService _historyService;
+
+        private readonly ITrainingService _trainingService;
+
+        public HistoryController(IHistoryService historyService, ITrainingService trainingService)
         {
-            return Ok();
+            _historyService = historyService;
+            _trainingService = trainingService;
+
+        }
+
+        [HttpPost("/training")]
+        public IActionResult PostTrainingHistory(TrainingHistoryRequestModel trainingHistoryRequest)
+        {
+            if (trainingHistoryRequest == null)
+            {
+                return BadRequest();
+            }
+
+            int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            TrainingModel training = _trainingService.GetById(userId, trainingHistoryRequest.TrainingId);
+
+            if (training == null)
+            {
+                return NotFound();
+            }
+
+            _historyService.AddTrainingHistory(userId, trainingHistoryRequest);
+
+            return NoContent();
         }
 
         [HttpPost("/weight")]
-        public IActionResult PostWeightHistory()
+        public IActionResult PostWeightHistory(WeighingHistoryRequestModel weighingHistoryRequest)
         {
-            return Ok();
+            if (weighingHistoryRequest == null)
+            {
+                return BadRequest();
+            }
+
+            int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            _historyService.AddWeighingHistory(userId, weighingHistoryRequest);
+
+            return NoContent();
         }
 
         [HttpGet("/training")]
         public IActionResult GetTrainingHistory()
         {
-            return Ok();
+            int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            List<TrainingHistoryModel> trainingHistories = _historyService.GetTrainingHistories(userId);
+
+            return Ok(trainingHistories);
         }
 
 
         [HttpGet("/weight")]
         public IActionResult GetWeightHistory()
         {
-            return Ok();
+            int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            List<WeighingHistoryModel> weighingHistories = _historyService.GetWeighingHistories(userId);
+
+            return Ok(weighingHistories);
         }
     }
 }

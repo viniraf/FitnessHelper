@@ -18,6 +18,8 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<TrainingHistoryModel> TrainingHistories { get; set; }
 
+    public DbSet<WeighingHistoryModel> WeighingHistories { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<UserModel>(model =>
