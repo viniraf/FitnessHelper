@@ -37,8 +37,8 @@ public class ApplicationDbContext : DbContext
             model.ToTable("Trainings"); 
             model.HasKey(training => training.Id); 
             model.Property(training => training.Id).ValueGeneratedOnAdd(); 
-            model.Property(training => training.Title).IsRequired().HasColumnType("varchar(50)"); 
-            model.Property(training => training.CreateDate).IsRequired().HasColumnType("datetime"); 
+            model.Property(training => training.TrainingTitle).IsRequired().HasColumnType("varchar(50)"); 
+            model.Property(training => training.CreateDate).IsRequired();
             model.Property(training => training.IsActive).IsRequired().HasColumnType("bit");
             model.Property(training => training.UserId).IsRequired().HasColumnType("int");
 
@@ -52,7 +52,7 @@ public class ApplicationDbContext : DbContext
             model.ToTable("Exercises");
             model.HasKey(exercise =>  exercise.Id);
             model.Property(exercise => exercise.Id).ValueGeneratedOnAdd();
-            model.Property(exercise => exercise.Exercise).IsRequired().HasColumnType("varchar(50)");
+            model.Property(exercise => exercise.ExerciseTitle).IsRequired().HasColumnType("varchar(50)");
             model.Property(exercise => exercise.QtySets).IsRequired().HasColumnType("int");
             model.Property(exercise => exercise.QtyReps).IsRequired().HasColumnType("int");
             model.Property(exercise => exercise.IsActive).IsRequired().HasColumnType("bit");

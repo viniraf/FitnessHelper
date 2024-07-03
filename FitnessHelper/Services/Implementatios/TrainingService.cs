@@ -58,8 +58,8 @@ public class TrainingService : ITrainingService
     {
         var trainingModel = new TrainingModel
         {
-            Title = trainingRequestModel.Title,
-            CreateDate = DateTime.Now,
+            TrainingTitle = trainingRequestModel.TrainingTitle,
+            CreateDate = DateOnly.FromDateTime(DateTime.Now),
             IsActive = trainingRequestModel.IsActive,
             UserId = userId,
         };
@@ -71,7 +71,7 @@ public class TrainingService : ITrainingService
     {
         TrainingModel trainingInDb = _trainingRepository.GetById(userId, id);
 
-        trainingInDb.Title = trainingUpdateRequestModel.Title;
+        trainingInDb.TrainingTitle = trainingUpdateRequestModel.TrainingTitle;
         trainingInDb.IsActive = trainingUpdateRequestModel.IsActive;
 
         _trainingRepository.Update(trainingInDb);

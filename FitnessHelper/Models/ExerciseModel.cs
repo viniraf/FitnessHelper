@@ -6,7 +6,7 @@ public class ExerciseModel
 {
     public int Id { get; set; }
 
-    public string Exercise { get; set; } = string.Empty;
+    public string ExerciseTitle { get; set; } = string.Empty;
 
     public int TrainingId { get; set; }
 

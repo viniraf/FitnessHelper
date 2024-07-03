@@ -23,7 +23,7 @@ public class ExerciseService : IExerciseService
     public void AddExercise(int userId, ExerciseRequestModel exerciseRequestModel)
     {
         var exercise = new ExerciseModel();
-        exercise.Exercise = exerciseRequestModel.Exercise;
+        exercise.ExerciseTitle = exerciseRequestModel.ExerciseTitle;
         exercise.TrainingId = exerciseRequestModel.TrainingId;
         exercise.QtySets = exerciseRequestModel.QtySets;
         exercise.QtyReps = exerciseRequestModel.QtyReps;
@@ -37,7 +37,7 @@ public class ExerciseService : IExerciseService
     {
         var exercise = _exerciseRepository.GetById(userId, id);
 
-        exercise.Exercise = exerciseRequestModel.Exercise;
+        exercise.ExerciseTitle = exerciseRequestModel.ExerciseTitle;
         exercise.QtySets = exerciseRequestModel.QtySets;
         exercise.QtyReps = exerciseRequestModel.QtyReps;
         exercise.IsActive = exerciseRequestModel.IsActive;
