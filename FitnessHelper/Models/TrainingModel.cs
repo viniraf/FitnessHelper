@@ -6,16 +6,15 @@ public class TrainingModel
 {
     public int Id { get; set; }
 
-    public string Title { get; set; } = string.Empty;
+    public string TrainingTitle { get; set; } = string.Empty;
 
-    public DateTime CreateDate { get; set; }
+    public DateOnly CreateDate { get; set; }
 
     public bool IsActive { get; set; }
 
     [JsonIgnore]
     public int UserId { get; set; }
 
-    // Navigation property
     public List<ExerciseModel> Exercises { get; set; }
 
     [JsonIgnore]

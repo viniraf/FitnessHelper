@@ -44,7 +44,7 @@ public class ExerciseController : ControllerBase
 
         int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-        var exercise = _exerciseService.GetById(userId, id);
+        ExerciseModel exercise = _exerciseService.GetById(userId, id);
 
         if (exercise == null)
         {
