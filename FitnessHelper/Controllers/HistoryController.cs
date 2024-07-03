@@ -23,7 +23,7 @@ namespace FitnessHelper.Controllers
 
         }
 
-        [HttpPost("/training")]
+        [HttpPost("training")]
         public IActionResult PostTrainingHistory(TrainingHistoryRequestModel trainingHistoryRequest)
         {
             if (trainingHistoryRequest == null)
@@ -45,7 +45,7 @@ namespace FitnessHelper.Controllers
             return NoContent();
         }
 
-        [HttpPost("/weight")]
+        [HttpPost("weight")]
         public IActionResult PostWeightHistory(WeighingHistoryRequestModel weighingHistoryRequest)
         {
             if (weighingHistoryRequest == null)
@@ -60,7 +60,7 @@ namespace FitnessHelper.Controllers
             return NoContent();
         }
 
-        [HttpGet("/training")]
+        [HttpGet("training")]
         public IActionResult GetTrainingHistory()
         {
             int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
@@ -71,7 +71,7 @@ namespace FitnessHelper.Controllers
         }
 
 
-        [HttpGet("/weight")]
+        [HttpGet("weight")]
         public IActionResult GetWeightHistory()
         {
             int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
