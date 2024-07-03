@@ -20,11 +20,11 @@ public class ExerciseService : IExerciseService
         return exercise;
     }
 
-    public void AddExercise(int userId, int trainingId, ExerciseRequestModel exerciseRequestModel)
+    public void AddExercise(int userId, ExerciseRequestModel exerciseRequestModel)
     {
         var exercise = new ExerciseModel();
         exercise.Exercise = exerciseRequestModel.Exercise;
-        exercise.TrainingId = trainingId;
+        exercise.TrainingId = exerciseRequestModel.TrainingId;
         exercise.QtySets = exerciseRequestModel.QtySets;
         exercise.QtyReps = exerciseRequestModel.QtyReps;
         exercise.IsActive = true;

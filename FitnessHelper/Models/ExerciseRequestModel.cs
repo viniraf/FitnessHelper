@@ -4,6 +4,8 @@ public class ExerciseRequestModel
 {
     public string Exercise { get; set; } = string.Empty;
 
+    public int TrainingId { get; set; }
+
     public int QtySets { get; set; }
 
     public int QtyReps { get; set; }
