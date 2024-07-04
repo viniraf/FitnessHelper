@@ -38,9 +38,9 @@ public class ExerciseController : ControllerBase
 
     [HttpPatch("{id}")]
     [Authorize]
-    public IActionResult UpdateExercise(int id, ExerciseRequestModel exerciseRequestModel)
+    public IActionResult UpdateExercise(int id, ExerciseUpdateRequestModel exerciseUpdateRequestModel)
     {
-        if (exerciseRequestModel == null)
+        if (exerciseUpdateRequestModel == null)
         {
             return BadRequest("Fill in the information correctly");
         }
@@ -54,7 +54,7 @@ public class ExerciseController : ControllerBase
             return NotFound();
         }
 
-        _exerciseService.UpdateExercise(userId, id, exerciseRequestModel);
+        _exerciseService.UpdateExercise(userId, id, exerciseUpdateRequestModel);
 
         return NoContent();
     }

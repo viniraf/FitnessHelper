@@ -1,6 +1,6 @@
 ﻿namespace FitnessHelper.Models;
 
-public class ExerciseRequestModel
+public class ExerciseUpdateRequestModel
 {
     public string ExerciseTitle { get; set; } = string.Empty;
 
@@ -9,4 +9,6 @@ public class ExerciseRequestModel
     public int QtySets { get; set; }
 
     public int QtyReps { get; set; }
+
+    public bool IsActive { get; set; }
 }

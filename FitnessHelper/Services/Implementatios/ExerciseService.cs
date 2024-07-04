@@ -33,14 +33,14 @@ public class ExerciseService : IExerciseService
         _exerciseRepository.AddExercise(exercise);
     }
 
-    public void UpdateExercise(int userId, int id, ExerciseRequestModel exerciseRequestModel)
+    public void UpdateExercise(int userId, int id, ExerciseUpdateRequestModel exerciseUpdateRequestModel)
     {
         ExerciseModel exercise = _exerciseRepository.GetById(userId, id);
 
-        exercise.ExerciseTitle = exerciseRequestModel.ExerciseTitle;
-        exercise.QtySets = exerciseRequestModel.QtySets;
-        exercise.QtyReps = exerciseRequestModel.QtyReps;
-        exercise.IsActive = exerciseRequestModel.IsActive;
+        exercise.ExerciseTitle = exerciseUpdateRequestModel.ExerciseTitle;
+        exercise.QtySets = exerciseUpdateRequestModel.QtySets;
+        exercise.QtyReps = exerciseUpdateRequestModel.QtyReps;
+        exercise.IsActive = exerciseUpdateRequestModel.IsActive;
 
         _exerciseRepository.UpdateExercise(exercise);
     }

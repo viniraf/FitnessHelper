@@ -8,5 +8,5 @@ public interface IExerciseService
 
     public void AddExercise(int userId, ExerciseRequestModel exerciseRequestModel);
 
-    public void UpdateExercise(int userId, int id, ExerciseRequestModel exerciseRequestModel);
+    public void UpdateExercise(int userId, int id, ExerciseUpdateRequestModel exerciseUpdateRequestModel);
 }

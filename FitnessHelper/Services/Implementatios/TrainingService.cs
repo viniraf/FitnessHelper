@@ -56,7 +56,7 @@ public class TrainingService : ITrainingService
         {
             TrainingTitle = trainingRequestModel.TrainingTitle,
             CreateDate = DateOnly.FromDateTime(DateTime.Now),
-            IsActive = trainingRequestModel.IsActive,
+            IsActive = true,
             UserId = userId,
         };
 
