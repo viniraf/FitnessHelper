@@ -1,6 +1,7 @@
 ﻿using FitnessHelper.Data;
 using FitnessHelper.Models;
 using FitnessHelper.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitnessHelper.Repositories.Implementations;
 
@@ -27,7 +28,18 @@ public class HistoryRepository : IHistoryRepository
 
     public List<TrainingHistoryModel> GetTrainingHistories(int userId)
     {
-        List<TrainingHistoryModel> trainingHistories = _applicationDbContext.TrainingHistories.Where(th =>  th.UserId == userId).ToList();
+        List<TrainingHistoryModel> trainingHistories = _applicationDbContext.TrainingHistories
+            .Where(th => th.UserId == userId)
+            .Include(th => th.Training)
+            .Select(th => new TrainingHistoryModel
+            {
+                Id = th.Id,
+                Date = th.Date,
+                TrainingId = th.TrainingId,
+                UserId = th.UserId,
+                TrainingName = th.Training.TrainingTitle
+            })
+            .ToList();
 
         return trainingHistories;
     }

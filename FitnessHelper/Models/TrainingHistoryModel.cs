@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace FitnessHelper.Models;
 
@@ -10,6 +11,10 @@ public class TrainingHistoryModel
 
     public int TrainingId { get; set; }
 
+    [NotMapped]
+    public string TrainingName { get; set; } = string.Empty;
+
+    [JsonIgnore]
     public int UserId { get; set; }
 
     [JsonIgnore]
