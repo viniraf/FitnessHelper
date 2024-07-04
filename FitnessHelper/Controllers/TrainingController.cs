@@ -1,4 +1,5 @@
-﻿using FitnessHelper.Models;
+﻿using FitnessHelper.Enums;
+using FitnessHelper.Models;
 using FitnessHelper.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -25,11 +26,12 @@ namespace FitnessHelper.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] bool trainingIsActive = true, bool exerciseIsActive = true)
         {
             int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-            List<TrainingModel> trainings = _trainingService.GetAll(userId);
+            List<TrainingModel> trainings = _trainingService.GetAllByStatus(userId, trainingIsActive, exerciseIsActive);
+
             return Ok(trainings);
         }
 

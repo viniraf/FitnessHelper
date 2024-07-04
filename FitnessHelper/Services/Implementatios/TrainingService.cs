@@ -1,4 +1,5 @@
-﻿using FitnessHelper.Models;
+﻿using FitnessHelper.Enums;
+using FitnessHelper.Models;
 using FitnessHelper.Repositories.Interfaces;
 using FitnessHelper.Services.Interfaces;
 
@@ -13,16 +14,16 @@ public class TrainingService : ITrainingService
         _trainingRepository = trainingRepository;
     }
 
-    public List<TrainingModel> GetAll(int userId)
+    public List<TrainingModel> GetAllByStatus(int userId, bool trainingIsActive, bool exerciseIsActive)
     {
-        List<TrainingModel> trainings = _trainingRepository.GetAll(userId);
+        List<TrainingModel> trainings = _trainingRepository.GetAllByStatus(userId, trainingIsActive);
 
         if (trainings.Count == 0)
         {
             return new List<TrainingModel>();
         }
 
-        List<ExerciseModel> exercises = _trainingRepository.GetAllExercises(userId);
+        List<ExerciseModel> exercises = _trainingRepository.GetAllExercisesByStatus(userId, exerciseIsActive);
 
 
         Dictionary<int, List<ExerciseModel>> exercisesByTrainingId = exercises.GroupBy(e => e.TrainingId)

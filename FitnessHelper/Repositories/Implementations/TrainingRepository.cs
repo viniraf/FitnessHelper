@@ -1,4 +1,5 @@
 ﻿using FitnessHelper.Data;
+using FitnessHelper.Enums;
 using FitnessHelper.Models;
 using FitnessHelper.Repositories.Interfaces;
 
@@ -13,9 +14,9 @@ public class TrainingRepository : ITrainingRepository
         _applicationDbContext = applicationDbContext;
     }
 
-    public List<TrainingModel> GetAll(int userId)
+    public List<TrainingModel> GetAllByStatus(int userId, bool trainingIsActive)
     {
-        List<TrainingModel> trainings = _applicationDbContext.Trainings.Where(t => t.UserId == userId).ToList();
+        List<TrainingModel> trainings = _applicationDbContext.Trainings.Where(t => t.UserId == userId && t.IsActive == trainingIsActive).ToList();
         return trainings;
     }
 
@@ -37,9 +38,9 @@ public class TrainingRepository : ITrainingRepository
         _applicationDbContext.SaveChanges();
     }
 
-    public List<ExerciseModel> GetAllExercises(int userId)
+    public List<ExerciseModel> GetAllExercisesByStatus(int userId, bool exerciseIsActive)
     {
-        List<ExerciseModel> exercises = _applicationDbContext.Exercises.Where(e => e.UserId == userId).ToList();
+        List<ExerciseModel> exercises = _applicationDbContext.Exercises.Where(e => e.UserId == userId && e.IsActive == exerciseIsActive).ToList();
 
         return exercises;
     }

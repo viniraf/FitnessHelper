@@ -1,10 +1,11 @@
-﻿using FitnessHelper.Models;
+﻿using FitnessHelper.Enums;
+using FitnessHelper.Models;
 
 namespace FitnessHelper.Repositories.Interfaces;
 
 public interface ITrainingRepository
 {
-    public List<TrainingModel> GetAll(int userId);
+    public List<TrainingModel> GetAllByStatus(int userId, bool trainingIsActive);
 
     public TrainingModel GetById(int userId, int id);
 
@@ -12,5 +13,5 @@ public interface ITrainingRepository
 
     public void Update(TrainingModel trainingModel);
 
-    public List<ExerciseModel> GetAllExercises(int userId);
+    public List<ExerciseModel> GetAllExercisesByStatus(int userId, bool exerciseIsActive);
 }

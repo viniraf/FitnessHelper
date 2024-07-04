@@ -1,10 +1,11 @@
-﻿using FitnessHelper.Models;
+﻿using FitnessHelper.Enums;
+using FitnessHelper.Models;
 
 namespace FitnessHelper.Services.Interfaces;
 
 public interface ITrainingService
 {
-    public List<TrainingModel> GetAll(int userId);
+    public List<TrainingModel> GetAllByStatus(int userId, bool trainingIsActive, bool exericiseIsActive);
 
     public TrainingModel GetById(int userId, int id);
 
