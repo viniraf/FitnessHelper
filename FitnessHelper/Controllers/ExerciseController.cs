@@ -1,5 +1,6 @@
 ﻿using FitnessHelper.Models;
 using FitnessHelper.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -20,6 +21,7 @@ public class ExerciseController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public IActionResult AddExercise(ExerciseRequestModel exerciseRequestModel)
     {
         if (exerciseRequestModel == null)
@@ -35,6 +37,7 @@ public class ExerciseController : ControllerBase
     }
 
     [HttpPatch("{id}")]
+    [Authorize]
     public IActionResult UpdateExercise(int id, ExerciseRequestModel exerciseRequestModel)
     {
         if (exerciseRequestModel == null)

@@ -1,5 +1,6 @@
 ﻿using FitnessHelper.Models;
 using FitnessHelper.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -24,6 +25,7 @@ namespace FitnessHelper.Controllers
         }
 
         [HttpPost("training")]
+        [Authorize]
         public IActionResult PostTrainingHistory(TrainingHistoryRequestModel trainingHistoryRequest)
         {
             if (trainingHistoryRequest == null)
@@ -46,6 +48,7 @@ namespace FitnessHelper.Controllers
         }
 
         [HttpPost("weight")]
+        [Authorize]
         public IActionResult PostWeightHistory(WeighingHistoryRequestModel weighingHistoryRequest)
         {
             if (weighingHistoryRequest == null)
@@ -61,6 +64,7 @@ namespace FitnessHelper.Controllers
         }
 
         [HttpGet("training")]
+        [Authorize]
         public IActionResult GetTrainingHistory()
         {
             int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
@@ -72,6 +76,7 @@ namespace FitnessHelper.Controllers
 
 
         [HttpGet("weight")]
+        [Authorize]
         public IActionResult GetWeightHistory()
         {
             int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
