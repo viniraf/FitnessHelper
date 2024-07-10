@@ -26,7 +26,7 @@ namespace FitnessHelper.Controllers
 
         [HttpPost("training")]
         [Authorize]
-        public IActionResult PostTrainingHistory(TrainingHistoryRequestModel trainingHistoryRequest)
+        public async Task<IActionResult> PostTrainingHistory(TrainingHistoryRequestModel trainingHistoryRequest)
         {
             if (trainingHistoryRequest == null)
             {
@@ -35,7 +35,7 @@ namespace FitnessHelper.Controllers
 
             int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-            TrainingModel training = _trainingService.GetById(userId, trainingHistoryRequest.TrainingId);
+            TrainingModel training = await _trainingService.GetByIdAsync(userId, trainingHistoryRequest.TrainingId);
 
             if (training == null)
             {

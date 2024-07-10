@@ -26,22 +26,22 @@ namespace FitnessHelper.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult Get([FromQuery] bool trainingIsActive = true, bool exerciseIsActive = true)
+        public async Task<IActionResult> Get([FromQuery] bool trainingIsActive = true, bool exerciseIsActive = true)
         {
             int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-            List<TrainingModel> trainings = _trainingService.GetAllByStatus(userId, trainingIsActive, exerciseIsActive);
+            List<TrainingModel> trainings = await _trainingService.GetAllByStatusAsync(userId, trainingIsActive, exerciseIsActive);
 
             return Ok(trainings);
         }
 
         [HttpGet("{id}")]
         [Authorize]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-            TrainingModel training = _trainingService.GetById(userId, id);
+            TrainingModel training = await _trainingService.GetByIdAsync(userId, id);
 
             if (training == null)
             {
@@ -53,7 +53,7 @@ namespace FitnessHelper.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Post(TrainingRequestModel trainingRequestModel)
+        public async Task<IActionResult> Post(TrainingRequestModel trainingRequestModel)
         {
             if (trainingRequestModel == null)
             {
@@ -62,25 +62,25 @@ namespace FitnessHelper.Controllers
 
             int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-            _trainingService.Create(userId, trainingRequestModel);
+            await _trainingService.CreateAsync(userId, trainingRequestModel);
 
             return Ok("Training was created successfully");
         }
 
         [HttpPut("{id}")]
         [Authorize]
-        public IActionResult Put(int id, TrainingUpdateRequestModel trainingUpdateRequestModel)
+        public async Task<IActionResult> Put(int id, TrainingUpdateRequestModel trainingUpdateRequestModel)
         {
             int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-            TrainingModel training = _trainingService.GetById(userId, id);
+            TrainingModel training = await _trainingService.GetByIdAsync(userId, id);
 
             if (training == null)
             {
                 return NotFound($"There is no training with Id {id}");
             }
             
-            _trainingService.Update(userId, id, trainingUpdateRequestModel);
+            await _trainingService.UpdateAsync(userId, id, trainingUpdateRequestModel);
 
             return Ok($"Update training by id: {id}");
         }

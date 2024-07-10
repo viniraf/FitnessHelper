@@ -5,11 +5,11 @@ namespace FitnessHelper.Services.Interfaces;
 
 public interface ITrainingService
 {
-    public List<TrainingModel> GetAllByStatus(int userId, bool trainingIsActive, bool exericiseIsActive);
+    public Task<List<TrainingModel>> GetAllByStatusAsync(int userId, bool trainingIsActive, bool exericiseIsActive);
 
-    public TrainingModel GetById(int userId, int id);
+    public Task<TrainingModel> GetByIdAsync(int userId, int id);
 
-    public void Create(int userId, TrainingRequestModel trainingRequestModel);
+    public Task CreateAsync(int userId, TrainingRequestModel trainingRequestModel);
 
-    public void Update(int userId, int id, TrainingUpdateRequestModel trainingUpdateRequestModel);
+    public Task UpdateAsync(int userId, int id, TrainingUpdateRequestModel trainingUpdateRequestModel);
 }

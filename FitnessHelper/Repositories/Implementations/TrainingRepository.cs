@@ -2,6 +2,7 @@
 using FitnessHelper.Enums;
 using FitnessHelper.Models;
 using FitnessHelper.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitnessHelper.Repositories.Implementations;
 
@@ -14,33 +15,39 @@ public class TrainingRepository : ITrainingRepository
         _applicationDbContext = applicationDbContext;
     }
 
-    public List<TrainingModel> GetAllByStatus(int userId, bool trainingIsActive)
+    public async Task<List<TrainingModel>> GetAllByStatusAsync(int userId, bool trainingIsActive)
     {
-        List<TrainingModel> trainings = _applicationDbContext.Trainings.Where(t => t.UserId == userId && t.IsActive == trainingIsActive).ToList();
+        List<TrainingModel> trainings = await _applicationDbContext.Trainings
+            .Where(t => t.UserId == userId && t.IsActive == trainingIsActive)
+            .ToListAsync();
+
         return trainings;
     }
 
-    public TrainingModel GetById(int userId, int id)
+    public async Task<TrainingModel> GetByIdAsync(int userId, int id)
     {
-        TrainingModel? training = _applicationDbContext.Trainings.FirstOrDefault(t => t.UserId == userId && t.Id == id);
+        TrainingModel? training = await _applicationDbContext.Trainings.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == id);
+
        return training;
     }
 
-    public void Create(TrainingModel trainingModel)
+    public async Task CreateAsync(TrainingModel trainingModel)
     {
-        _applicationDbContext.Trainings.Add(trainingModel);
-        _applicationDbContext.SaveChanges();
+        await _applicationDbContext.Trainings.AddAsync(trainingModel);
+        await _applicationDbContext.SaveChangesAsync();
     }
 
-    public void Update(TrainingModel trainingModel)
+    public async Task UpdateAsync(TrainingModel trainingModel)
     {
-        _applicationDbContext.Update(trainingModel);
-        _applicationDbContext.SaveChanges();
+        _applicationDbContext.Trainings.Update(trainingModel);
+        await _applicationDbContext.SaveChangesAsync();
     }
 
-    public List<ExerciseModel> GetAllExercisesByStatus(int userId, bool exerciseIsActive)
+    public async Task<List<ExerciseModel>> GetAllExercisesByStatusAsync(int userId, bool exerciseIsActive)
     {
-        List<ExerciseModel> exercises = _applicationDbContext.Exercises.Where(e => e.UserId == userId && e.IsActive == exerciseIsActive).ToList();
+        List<ExerciseModel> exercises = await _applicationDbContext.Exercises
+            .Where(e => e.UserId == userId && e.IsActive == exerciseIsActive)
+            .ToListAsync();
 
         return exercises;
     }

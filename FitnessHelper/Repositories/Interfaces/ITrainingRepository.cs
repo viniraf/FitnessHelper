@@ -5,13 +5,13 @@ namespace FitnessHelper.Repositories.Interfaces;
 
 public interface ITrainingRepository
 {
-    public List<TrainingModel> GetAllByStatus(int userId, bool trainingIsActive);
+    public Task<List<TrainingModel>> GetAllByStatusAsync(int userId, bool trainingIsActive);
 
-    public TrainingModel GetById(int userId, int id);
+    public Task<TrainingModel> GetByIdAsync(int userId, int id);
 
-    public void Create(TrainingModel trainingModel);
+    public Task CreateAsync(TrainingModel trainingModel);
 
-    public void Update(TrainingModel trainingModel);
+    public Task UpdateAsync(TrainingModel trainingModel);
 
-    public List<ExerciseModel> GetAllExercisesByStatus(int userId, bool exerciseIsActive);
+    public Task<List<ExerciseModel>> GetAllExercisesByStatusAsync(int userId, bool exerciseIsActive);
 }
