@@ -13,16 +13,17 @@ public class ExerciseService : IExerciseService
         _exerciseRepository = exerciseRepository;
     }
 
-    public ExerciseModel GetById(int userId, int id)
+    public async Task<ExerciseModel> GetByIdAsync(int userId, int id)
     {
-        ExerciseModel exercise = _exerciseRepository.GetById(userId, id);
+        ExerciseModel exercise = await _exerciseRepository.GetByIdAsync(userId, id);
 
         return exercise;
     }
 
-    public void AddExercise(int userId, ExerciseRequestModel exerciseRequestModel)
+    public async Task AddExerciseAsync(int userId, ExerciseRequestModel exerciseRequestModel)
     {
         ExerciseModel exercise = new ExerciseModel();
+
         exercise.ExerciseTitle = exerciseRequestModel.ExerciseTitle;
         exercise.TrainingId = exerciseRequestModel.TrainingId;
         exercise.QtySets = exerciseRequestModel.QtySets;
@@ -30,18 +31,18 @@ public class ExerciseService : IExerciseService
         exercise.IsActive = true;
         exercise.UserId = userId;
 
-        _exerciseRepository.AddExercise(exercise);
+        await _exerciseRepository.AddExerciseAsync(exercise);
     }
 
-    public void UpdateExercise(int userId, int id, ExerciseUpdateRequestModel exerciseUpdateRequestModel)
+    public async Task UpdateExerciseAsync(int userId, int id, ExerciseUpdateRequestModel exerciseUpdateRequestModel)
     {
-        ExerciseModel exercise = _exerciseRepository.GetById(userId, id);
+        ExerciseModel exercise = await _exerciseRepository.GetByIdAsync(userId, id);
 
         exercise.ExerciseTitle = exerciseUpdateRequestModel.ExerciseTitle;
         exercise.QtySets = exerciseUpdateRequestModel.QtySets;
         exercise.QtyReps = exerciseUpdateRequestModel.QtyReps;
         exercise.IsActive = exerciseUpdateRequestModel.IsActive;
 
-        _exerciseRepository.UpdateExercise(exercise);
+        await _exerciseRepository.UpdateExerciseAsync(exercise);
     }
 }

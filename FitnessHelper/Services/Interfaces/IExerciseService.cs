@@ -4,9 +4,9 @@ namespace FitnessHelper.Services.Interfaces;
 
 public interface IExerciseService
 {
-    public ExerciseModel GetById(int userId, int id);
+    public Task<ExerciseModel> GetByIdAsync(int userId, int id);
 
-    public void AddExercise(int userId, ExerciseRequestModel exerciseRequestModel);
+    public Task AddExerciseAsync(int userId, ExerciseRequestModel exerciseRequestModel);
 
-    public void UpdateExercise(int userId, int id, ExerciseUpdateRequestModel exerciseUpdateRequestModel);
+    public Task UpdateExerciseAsync(int userId, int id, ExerciseUpdateRequestModel exerciseUpdateRequestModel);
 }

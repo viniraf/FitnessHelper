@@ -22,7 +22,7 @@ public class ExerciseController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public IActionResult AddExercise(ExerciseRequestModel exerciseRequestModel)
+    public async Task<IActionResult> AddExercise(ExerciseRequestModel exerciseRequestModel)
     {
         if (exerciseRequestModel == null)
         {
@@ -31,14 +31,14 @@ public class ExerciseController : ControllerBase
 
         int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-        _exerciseService.AddExercise(userId, exerciseRequestModel);
+        await _exerciseService.AddExerciseAsync(userId, exerciseRequestModel);
 
         return NoContent();
     }
 
     [HttpPatch("{id}")]
     [Authorize]
-    public IActionResult UpdateExercise(int id, ExerciseUpdateRequestModel exerciseUpdateRequestModel)
+    public async Task<IActionResult> UpdateExercise(int id, ExerciseUpdateRequestModel exerciseUpdateRequestModel)
     {
         if (exerciseUpdateRequestModel == null)
         {
@@ -47,14 +47,14 @@ public class ExerciseController : ControllerBase
 
         int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-        ExerciseModel exercise = _exerciseService.GetById(userId, id);
+        ExerciseModel exercise = await _exerciseService.GetByIdAsync(userId, id);
 
         if (exercise == null)
         {
             return NotFound();
         }
 
-        _exerciseService.UpdateExercise(userId, id, exerciseUpdateRequestModel);
+        await _exerciseService.UpdateExerciseAsync(userId, id, exerciseUpdateRequestModel);
 
         return NoContent();
     }
