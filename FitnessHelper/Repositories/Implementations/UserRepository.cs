@@ -1,6 +1,7 @@
 ﻿using FitnessHelper.Data;
 using FitnessHelper.Models;
 using FitnessHelper.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitnessHelper.Repositories.Implementations;
 
@@ -14,20 +15,15 @@ public class UserRepository : IUserRepository
         _applicationDbContext = applicationDbContext;
     }
 
-    public void Register(UserModel userModel)
+    public async Task RegisterAsync(UserModel userModel)
     {
-        _applicationDbContext.Users.Add(userModel);
-        _applicationDbContext.SaveChanges();
+        await _applicationDbContext.Users.AddAsync(userModel);
+        await _applicationDbContext.SaveChangesAsync();
     }
 
-    public UserModel GetByUsername(string username)
+    public async Task<UserModel> GetByUsernameAsync(string username)
     {
-        UserModel user = _applicationDbContext.Users.FirstOrDefault(x => x.Username == username);
-
-        if (user == null)
-        {
-            return new UserModel();
-        }
+        UserModel user = await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.Username == username);
 
         return user;
     }

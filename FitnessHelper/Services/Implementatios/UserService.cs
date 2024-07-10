@@ -23,7 +23,7 @@ public class UserService : IUserService
 
     }
 
-    public void Register(UserRegisterModel userRegisterModel)
+    public async Task RegisterAsync(UserRegisterModel userRegisterModel)
     {
         string hashedPassword = _passwordHashHelper.CreateHash(userRegisterModel.Password);
 
@@ -34,18 +34,21 @@ public class UserService : IUserService
             PasswordHash = hashedPassword
         };
 
-        _userRepository.Register(newUser);
+        await _userRepository.RegisterAsync(newUser);
     }
 
-    public UserModel GetByUsername(string username)
+    public async Task<UserModel> GetByUsernameAsync(string username)
     {
-        UserModel user = _userRepository.GetByUsername(username);
+        UserModel user = await _userRepository.GetByUsernameAsync(username);
+
         return user;
     }
 
-    public LoginResult Login(UserLoginModel userLoginModel)
+    public async Task<LoginResult> LoginAsync(UserLoginModel userLoginModel)
     {
-        string? passwordSavedHash = _userRepository.GetByUsername(userLoginModel.Username).PasswordHash;
+        UserModel passwordSavedHashModel = await _userRepository.GetByUsernameAsync(userLoginModel.Username);
+
+        string passwordSavedHash = passwordSavedHashModel.PasswordHash;
 
         if (string.IsNullOrEmpty(passwordSavedHash))
         {
@@ -65,6 +68,7 @@ public class UserService : IUserService
     public string GenerateToken(int userId)
     {
         string token = _jwtHelper.GenerateToken(userId);
+
         return token;
     }
 }

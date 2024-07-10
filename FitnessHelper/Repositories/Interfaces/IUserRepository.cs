@@ -4,7 +4,7 @@ namespace FitnessHelper.Repositories.Interfaces;
 
 public interface IUserRepository
 {
-    public void Register(UserModel userModel);
+    public Task RegisterAsync(UserModel userModel);
 
-    public UserModel GetByUsername(string username);
+    public Task<UserModel> GetByUsernameAsync(string username);
 }

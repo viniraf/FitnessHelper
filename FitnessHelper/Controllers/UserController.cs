@@ -26,27 +26,28 @@ public class UserController : ControllerBase
 
     [SwaggerOperation(Tags = ["User"])]
     [HttpPost("register")]
-    public IActionResult Register(UserRegisterModel user)
+    public async Task<IActionResult> Register(UserRegisterModel user)
     {
         if (string.IsNullOrEmpty(user.Name) || string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password))
         {
             return BadRequest("The information was not filled in correctly");
         }
 
-        _userService.Register(user);
+        await _userService.RegisterAsync(user);
+
         return Ok("User created successfully");
     }
 
     [SwaggerOperation(Tags = ["User"])]
     [HttpPost("login")]
-    public IActionResult Login(UserLoginModel user)
+    public async Task<IActionResult> Login(UserLoginModel userLogin)
     {
-        if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password))
+        if (string.IsNullOrEmpty(userLogin.Username) || string.IsNullOrEmpty(userLogin.Password))
         {
             return BadRequest("The information was not filled in correctly");
         }
 
-        LoginResult loginResult = _userService.Login(user);
+        LoginResult loginResult = await _userService.LoginAsync(userLogin);
 
         if (loginResult == LoginResult.UserNotFound)
         {
@@ -58,7 +59,9 @@ public class UserController : ControllerBase
             return Unauthorized("Invalid password");
         }
 
-        int userId = _userService.GetByUsername(user.Username).Id;
+        UserModel userModel = await _userService.GetByUsernameAsync(userLogin.Username);
+        int userId = userModel.Id;
+
         string token = _userService.GenerateToken(userId);
 
         return Ok($"Token: {token}");
