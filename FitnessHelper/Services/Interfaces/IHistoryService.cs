@@ -4,11 +4,11 @@ namespace FitnessHelper.Services.Interfaces;
 
 public interface IHistoryService
 {
-    public void AddTrainingHistory(int userId, TrainingHistoryRequestModel trainingHistoryRequest);
+    public Task AddTrainingHistoryAsync(int userId, TrainingHistoryRequestModel trainingHistoryRequest);
 
-    public List<TrainingHistoryModel> GetTrainingHistories(int userId);
+    public Task<List<TrainingHistoryModel>> GetTrainingHistoriesAsync(int userId);
 
-    public void AddWeighingHistory(int userId, WeighingHistoryRequestModel weighingHistoryRequest);
+    public Task AddWeighingHistoryAsync(int userId, WeighingHistoryRequestModel weighingHistoryRequest);
 
-    public List<WeighingHistoryModel> GetWeighingHistories(int userId);
+    public Task<List<WeighingHistoryModel>> GetWeighingHistoriesAsync(int userId);
 }

@@ -13,28 +13,29 @@ public class HistoryService : IHistoryService
         _historyRepository = historyRepository;
     }
 
-    public void AddTrainingHistory(int userId, TrainingHistoryRequestModel trainingHistoryRequest)
+    public async Task AddTrainingHistoryAsync(int userId, TrainingHistoryRequestModel trainingHistoryRequest)
     {
         TrainingHistoryModel trainingHistory = new TrainingHistoryModel();
         trainingHistory.Date = trainingHistoryRequest.Date;
         trainingHistory.TrainingId = trainingHistoryRequest.TrainingId;
         trainingHistory.UserId = userId;
 
-        _historyRepository.AddTrainingHistory(trainingHistory);
+        await _historyRepository.AddTrainingHistoryAsync(trainingHistory);
     }
 
-    public void AddWeighingHistory(int userId, WeighingHistoryRequestModel weighingHistoryRequest)
+    public async Task AddWeighingHistoryAsync(int userId, WeighingHistoryRequestModel weighingHistoryRequest)
     {
         WeighingHistoryModel weighingHistory = new WeighingHistoryModel();
         weighingHistory.Date = weighingHistoryRequest.Date;
         weighingHistory.Weight = weighingHistoryRequest.Weight;
         weighingHistory.UserId = userId;
-        _historyRepository.AddWeighingHistory(weighingHistory);
+
+        await _historyRepository.AddWeighingHistoryAsync(weighingHistory);
     }
 
-    public List<TrainingHistoryModel> GetTrainingHistories(int userId)
+    public async Task<List<TrainingHistoryModel>> GetTrainingHistoriesAsync(int userId)
     {
-        List<TrainingHistoryModel> trainingHistories = _historyRepository.GetTrainingHistories(userId);
+        List<TrainingHistoryModel> trainingHistories = await _historyRepository.GetTrainingHistoriesAsync(userId);
 
         if (trainingHistories.Count == 0)
         {
@@ -44,9 +45,9 @@ public class HistoryService : IHistoryService
         return trainingHistories;
     }
 
-    public List<WeighingHistoryModel> GetWeighingHistories(int userId)
+    public async Task<List<WeighingHistoryModel>> GetWeighingHistoriesAsync(int userId)
     {
-        List<WeighingHistoryModel> weighingHistories = _historyRepository.GetWeighingHistories(userId);
+        List<WeighingHistoryModel> weighingHistories = await _historyRepository.GetWeighingHistoriesAsync(userId);
 
         if (weighingHistories.Count > 0)
         {

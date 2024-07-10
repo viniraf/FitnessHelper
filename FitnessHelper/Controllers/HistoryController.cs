@@ -42,14 +42,14 @@ namespace FitnessHelper.Controllers
                 return NotFound();
             }
 
-            _historyService.AddTrainingHistory(userId, trainingHistoryRequest);
+            await _historyService.AddTrainingHistoryAsync(userId, trainingHistoryRequest);
 
             return NoContent();
         }
 
         [HttpPost("weight")]
         [Authorize]
-        public IActionResult PostWeightHistory(WeighingHistoryRequestModel weighingHistoryRequest)
+        public async Task<IActionResult> PostWeightHistory(WeighingHistoryRequestModel weighingHistoryRequest)
         {
             if (weighingHistoryRequest == null)
             {
@@ -58,18 +58,18 @@ namespace FitnessHelper.Controllers
 
             int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-            _historyService.AddWeighingHistory(userId, weighingHistoryRequest);
+            await _historyService.AddWeighingHistoryAsync(userId, weighingHistoryRequest);
 
             return NoContent();
         }
 
         [HttpGet("training")]
         [Authorize]
-        public IActionResult GetTrainingHistory()
+        public async Task<IActionResult> GetTrainingHistory()
         {
             int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-            List<TrainingHistoryModel> trainingHistories = _historyService.GetTrainingHistories(userId);
+            List<TrainingHistoryModel> trainingHistories = await _historyService.GetTrainingHistoriesAsync(userId);
 
             return Ok(trainingHistories);
         }
@@ -77,11 +77,11 @@ namespace FitnessHelper.Controllers
 
         [HttpGet("weight")]
         [Authorize]
-        public IActionResult GetWeightHistory()
+        public async Task<IActionResult> GetWeightHistory()
         {
             int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-            List<WeighingHistoryModel> weighingHistories = _historyService.GetWeighingHistories(userId);
+            List<WeighingHistoryModel> weighingHistories = await _historyService.GetWeighingHistoriesAsync(userId);
 
             return Ok(weighingHistories);
         }

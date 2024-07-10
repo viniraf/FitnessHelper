@@ -14,21 +14,21 @@ public class HistoryRepository : IHistoryRepository
         _applicationDbContext = applicationDbContext;
     }
 
-    public void AddTrainingHistory(TrainingHistoryModel trainingHistory)
+    public async Task AddTrainingHistoryAsync(TrainingHistoryModel trainingHistory)
     {
-        _applicationDbContext.TrainingHistories.Add(trainingHistory);
-        _applicationDbContext.SaveChanges();
+        await _applicationDbContext.TrainingHistories.AddAsync(trainingHistory);
+        await _applicationDbContext.SaveChangesAsync();
     }
 
-    public void AddWeighingHistory(WeighingHistoryModel weighingHistory)
+    public async Task AddWeighingHistoryAsync(WeighingHistoryModel weighingHistory)
     {
-        _applicationDbContext.WeighingHistories.Add(weighingHistory);
-        _applicationDbContext.SaveChanges();
+        await _applicationDbContext.WeighingHistories.AddAsync(weighingHistory);
+        await _applicationDbContext.SaveChangesAsync();
     }
 
-    public List<TrainingHistoryModel> GetTrainingHistories(int userId)
+    public async Task<List<TrainingHistoryModel>> GetTrainingHistoriesAsync(int userId)
     {
-        List<TrainingHistoryModel> trainingHistories = _applicationDbContext.TrainingHistories
+        List<TrainingHistoryModel> trainingHistories = await _applicationDbContext.TrainingHistories
             .Where(th => th.UserId == userId)
             .Include(th => th.Training)
             .Select(th => new TrainingHistoryModel
@@ -39,14 +39,16 @@ public class HistoryRepository : IHistoryRepository
                 UserId = th.UserId,
                 TrainingName = th.Training.TrainingTitle
             })
-            .ToList();
+            .ToListAsync();
 
         return trainingHistories;
     }
 
-    public List<WeighingHistoryModel> GetWeighingHistories(int userId)
+    public async Task<List<WeighingHistoryModel>> GetWeighingHistoriesAsync(int userId)
     {
-        List<WeighingHistoryModel> weighingHistories = _applicationDbContext.WeighingHistories.Where(wh =>  wh.UserId == userId).ToList();
+        List<WeighingHistoryModel> weighingHistories = await _applicationDbContext.WeighingHistories
+            .Where(wh =>  wh.UserId == userId)
+            .ToListAsync();
 
         return weighingHistories;
     }
