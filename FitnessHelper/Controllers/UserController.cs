@@ -38,14 +38,9 @@ public class UserController : ControllerBase
 
         LoginResult loginResult = await _userService.LoginAsync(userLogin);
 
-        if (loginResult == LoginResult.UserNotFound)
+        if (loginResult == LoginResult.InvalidCredentials)
         {
             return Unauthorized("Invalid credentials");
-        }
-
-        if (loginResult == LoginResult.InvalidPassword)
-        {
-            return Unauthorized("Invalid password");
         }
 
         UserModel userModel = await _userService.GetByUsernameAsync(userLogin.Username);

@@ -45,17 +45,17 @@ public class UserService : IUserService
 
         if (string.IsNullOrEmpty(passwordSavedHash))
         {
-            return LoginResult.UserNotFound;
+            return LoginResult.InvalidCredentials;
         }
 
         bool isInputPasswordCorrect = _passwordHashHelper.IsInputPasswordCorrect(userLoginModel.Password, passwordSavedHash);
 
         if (isInputPasswordCorrect == false)
         {
-            return LoginResult.InvalidPassword;
+            return LoginResult.InvalidCredentials;
         }
 
-        return LoginResult.ValidLogin;
+        return LoginResult.ValidCredentials;
     }
 
     public string GenerateToken(int userId)
