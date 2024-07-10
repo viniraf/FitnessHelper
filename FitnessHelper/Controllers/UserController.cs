@@ -1,15 +1,4 @@
-﻿using FitnessHelper.Models;
-using FitnessHelper.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
-using FitnessHelper.Enums;
-using FitnessHelper.Helpers;
-using Microsoft.AspNetCore.Authorization;
-using FitnessHelper.Helpers.Implementations;
-using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
-
-namespace FitnessHelper.Controllers;
+﻿namespace FitnessHelper.Controllers;
 
 [Route("api/user")]
 [SwaggerControllerOrder(1)]

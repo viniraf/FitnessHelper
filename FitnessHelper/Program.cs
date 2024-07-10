@@ -1,23 +1,3 @@
-using DotNetEnv;
-using FitnessHelper.Data;
-using FitnessHelper.Helpers.Implementations;
-using FitnessHelper.Helpers.Interfaces;
-using FitnessHelper.Repositories.Implementations;
-using FitnessHelper.Repositories.Interfaces;
-using FitnessHelper.Services.Implementatios;
-using FitnessHelper.Services.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Annotations;
-using Swashbuckle.AspNetCore.SwaggerUI;
-using System.Reflection;
-using System.Text;
-using System.Text.Json.Serialization;
-using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Load the environment variables from the .env file

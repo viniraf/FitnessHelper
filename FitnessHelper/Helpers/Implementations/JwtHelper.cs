@@ -1,13 +1,5 @@
 ﻿namespace FitnessHelper.Helpers.Implementations;
 
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using DotNetEnv;
-using FitnessHelper.Helpers.Interfaces;
-
 public class JwtHelper : IJwtHelper
 {
     private readonly string _secretKey;

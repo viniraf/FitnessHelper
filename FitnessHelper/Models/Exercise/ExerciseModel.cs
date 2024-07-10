@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace FitnessHelper.Models;
+﻿namespace FitnessHelper.Models.Exercise;
 
 public class ExerciseModel
 {

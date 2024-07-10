@@ -1,4 +1,4 @@
-﻿namespace FitnessHelper.Models;
+﻿namespace FitnessHelper.Models.TrainingHistory;
 
 public class TrainingHistoryRequestModel
 {

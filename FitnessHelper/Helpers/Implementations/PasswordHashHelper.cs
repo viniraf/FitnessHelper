@@ -1,8 +1,4 @@
-﻿using FitnessHelper.Helpers.Interfaces;
-using System.Security.Cryptography;
-using System.Text;
-
-namespace FitnessHelper.Helpers.Implementations;
+﻿namespace FitnessHelper.Helpers.Implementations;
 
 public class PasswordHashHelper : IPasswordHashHelper
 {

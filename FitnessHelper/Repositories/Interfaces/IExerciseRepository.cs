@@ -1,6 +1,4 @@
-﻿using FitnessHelper.Models;
-
-namespace FitnessHelper.Repositories.Interfaces;
+﻿namespace FitnessHelper.Repositories.Interfaces;
 
 public interface IExerciseRepository
 {

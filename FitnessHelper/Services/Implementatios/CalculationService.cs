@@ -1,9 +1,4 @@
-﻿using FitnessHelper.Dictionaries;
-using FitnessHelper.Enums;
-using FitnessHelper.Models;
-using FitnessHelper.Services.Interfaces;
-
-namespace FitnessHelper.Services.Implementatios;
+﻿namespace FitnessHelper.Services.Implementatios;
 
 public class CalculationService : ICalculationService
 {

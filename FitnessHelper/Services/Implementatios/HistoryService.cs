@@ -1,8 +1,4 @@
-﻿using FitnessHelper.Models;
-using FitnessHelper.Repositories.Interfaces;
-using FitnessHelper.Services.Interfaces;
-
-namespace FitnessHelper.Services.Implementatios;
+﻿namespace FitnessHelper.Services.Implementatios;
 
 public class HistoryService : IHistoryService
 {

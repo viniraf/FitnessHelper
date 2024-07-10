@@ -1,9 +1,4 @@
-﻿using FitnessHelper.Data;
-using FitnessHelper.Models;
-using FitnessHelper.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
-
-namespace FitnessHelper.Repositories.Implementations;
+﻿namespace FitnessHelper.Repositories.Implementations;
 
 public class UserRepository : IUserRepository
 {

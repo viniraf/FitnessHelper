@@ -1,4 +1,4 @@
-﻿namespace FitnessHelper.Models;
+﻿namespace FitnessHelper.Models.User;
 
 public class UserModel
 {
@@ -12,6 +12,6 @@ public class UserModel
 
     public UserModel()
     {
-        
+
     }
 }

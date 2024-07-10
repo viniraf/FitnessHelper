@@ -1,9 +1,4 @@
-﻿using FitnessHelper.Enums;
-using FitnessHelper.Models;
-using FitnessHelper.Repositories.Interfaces;
-using FitnessHelper.Services.Interfaces;
-
-namespace FitnessHelper.Services.Implementatios;
+﻿namespace FitnessHelper.Services.Implementatios;
 
 public class TrainingService : ITrainingService
 {
@@ -73,6 +68,3 @@ public class TrainingService : ITrainingService
         await _trainingRepository.UpdateAsync(trainingInDb);
     }
 }
-
-
-

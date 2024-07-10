@@ -1,7 +1,4 @@
-﻿using FitnessHelper.Models;
-using Microsoft.EntityFrameworkCore;
-
-namespace FitnessHelper.Data;
+﻿namespace FitnessHelper.Data;
 
 public class ApplicationDbContext : DbContext
 {

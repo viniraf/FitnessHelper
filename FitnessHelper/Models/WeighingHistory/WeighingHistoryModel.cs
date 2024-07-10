@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace FitnessHelper.Models;
+﻿namespace FitnessHelper.Models.WeighingHistory;
 
 public class WeighingHistoryModel
 {

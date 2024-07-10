@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-
-namespace FitnessHelper.Models;
+﻿namespace FitnessHelper.Models.TrainingHistory;
 
 public class TrainingHistoryModel
 {

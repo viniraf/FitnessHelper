@@ -1,11 +1,4 @@
-﻿using FitnessHelper.Enums;
-using FitnessHelper.Helpers.Implementations;
-using FitnessHelper.Helpers.Interfaces;
-using FitnessHelper.Models;
-using FitnessHelper.Repositories.Interfaces;
-using FitnessHelper.Services.Interfaces;
-
-namespace FitnessHelper.Services.Implementatios;
+﻿namespace FitnessHelper.Services.Implementatios;
 
 public class UserService : IUserService
 {
