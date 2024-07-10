@@ -1,6 +1,6 @@
-﻿namespace FitnessHelper.Models;
+﻿namespace FitnessHelper.Models.Exercise;
 
-public class ExerciseRequestModel
+public class ExerciseUpdateRequestModel
 {
     public string ExerciseTitle { get; set; } = string.Empty;
 

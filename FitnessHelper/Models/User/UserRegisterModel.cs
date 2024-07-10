@@ -1,4 +1,4 @@
-﻿namespace FitnessHelper.Models;
+﻿namespace FitnessHelper.Models.User;
 
 public class UserRegisterModel
 {
@@ -10,6 +10,6 @@ public class UserRegisterModel
 
     public UserRegisterModel()
     {
-        
+
     }
 }

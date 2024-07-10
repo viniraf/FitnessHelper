@@ -1,11 +1,4 @@
-﻿using FitnessHelper.Models;
-using FitnessHelper.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
-
-namespace FitnessHelper.Controllers;
+﻿namespace FitnessHelper.Controllers;
 
 [Route("api/exercise")]
 [SwaggerControllerOrder(4)]
@@ -20,7 +13,8 @@ public class ExerciseController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AddExercise(ExerciseRequestModel exerciseRequestModel)
+    [Authorize]
+    public async Task<IActionResult> AddExercise(ExerciseRequestModel exerciseRequestModel)
     {
         if (exerciseRequestModel == null)
         {
@@ -29,29 +23,30 @@ public class ExerciseController : ControllerBase
 
         int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-        _exerciseService.AddExercise(userId, exerciseRequestModel);
+        await _exerciseService.AddExerciseAsync(userId, exerciseRequestModel);
 
         return NoContent();
     }
 
     [HttpPatch("{id}")]
-    public IActionResult UpdateExercise(int id, ExerciseRequestModel exerciseRequestModel)
+    [Authorize]
+    public async Task<IActionResult> UpdateExercise(int id, ExerciseUpdateRequestModel exerciseUpdateRequestModel)
     {
-        if (exerciseRequestModel == null)
+        if (exerciseUpdateRequestModel == null)
         {
             return BadRequest("Fill in the information correctly");
         }
 
         int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-        ExerciseModel exercise = _exerciseService.GetById(userId, id);
+        ExerciseModel exercise = await _exerciseService.GetByIdAsync(userId, id);
 
         if (exercise == null)
         {
             return NotFound();
         }
 
-        _exerciseService.UpdateExercise(userId, id, exerciseRequestModel);
+        await _exerciseService.UpdateExerciseAsync(userId, id, exerciseUpdateRequestModel);
 
         return NoContent();
     }

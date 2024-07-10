@@ -1,8 +1,4 @@
-﻿using FitnessHelper.Models;
-using FitnessHelper.Repositories.Interfaces;
-using FitnessHelper.Services.Interfaces;
-
-namespace FitnessHelper.Services.Implementatios;
+﻿namespace FitnessHelper.Services.Implementatios;
 
 public class TrainingService : ITrainingService
 {
@@ -13,16 +9,16 @@ public class TrainingService : ITrainingService
         _trainingRepository = trainingRepository;
     }
 
-    public List<TrainingModel> GetAll(int userId)
+    public async Task<List<TrainingModel>> GetAllByStatusAsync(int userId, bool trainingIsActive, bool exerciseIsActive)
     {
-        List<TrainingModel> trainings = _trainingRepository.GetAll(userId);
+        List<TrainingModel> trainings = await _trainingRepository.GetAllByStatusAsync(userId, trainingIsActive);
 
         if (trainings.Count == 0)
         {
             return new List<TrainingModel>();
         }
 
-        List<ExerciseModel> exercises = _trainingRepository.GetAllExercises(userId);
+        List<ExerciseModel> exercises = await _trainingRepository.GetAllExercisesByStatusAsync(userId, exerciseIsActive);
 
 
         Dictionary<int, List<ExerciseModel>> exercisesByTrainingId = exercises.GroupBy(e => e.TrainingId)
@@ -42,36 +38,33 @@ public class TrainingService : ITrainingService
         return trainings;
     }
 
-    public TrainingModel GetById(int userId, int id)
+    public async Task<TrainingModel> GetByIdAsync(int userId, int id)
     {
-        TrainingModel training = _trainingRepository.GetById(userId, id);
+        TrainingModel training = await _trainingRepository.GetByIdAsync(userId, id);
 
         return training;
     }
 
-    public void Create(int userId, TrainingRequestModel trainingRequestModel)
+    public async Task CreateAsync(int userId, TrainingRequestModel trainingRequestModel)
     {
         TrainingModel trainingModel = new TrainingModel
         {
             TrainingTitle = trainingRequestModel.TrainingTitle,
             CreateDate = DateOnly.FromDateTime(DateTime.Now),
-            IsActive = trainingRequestModel.IsActive,
+            IsActive = true,
             UserId = userId,
         };
 
-        _trainingRepository.Create(trainingModel);
+        await _trainingRepository.CreateAsync(trainingModel);
     }
 
-    public void Update(int userId, int id, TrainingUpdateRequestModel trainingUpdateRequestModel)
+    public async Task UpdateAsync(int userId, int id, TrainingUpdateRequestModel trainingUpdateRequestModel)
     {
-        TrainingModel trainingInDb = _trainingRepository.GetById(userId, id);
+        TrainingModel trainingInDb = await _trainingRepository.GetByIdAsync(userId, id);
 
         trainingInDb.TrainingTitle = trainingUpdateRequestModel.TrainingTitle;
         trainingInDb.IsActive = trainingUpdateRequestModel.IsActive;
 
-        _trainingRepository.Update(trainingInDb);
+        await _trainingRepository.UpdateAsync(trainingInDb);
     }
 }
-
-
-

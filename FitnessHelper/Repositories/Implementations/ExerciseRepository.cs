@@ -1,8 +1,4 @@
-﻿using FitnessHelper.Data;
-using FitnessHelper.Models;
-using FitnessHelper.Repositories.Interfaces;
-
-namespace FitnessHelper.Repositories.Implementations;
+﻿namespace FitnessHelper.Repositories.Implementations;
 
 public class ExerciseRepository : IExerciseRepository
 {
@@ -13,22 +9,22 @@ public class ExerciseRepository : IExerciseRepository
         _applicationDbContext = applicationDbContext;
     }
 
-    public ExerciseModel GetById(int userId, int id)
+    public async Task<ExerciseModel> GetByIdAsync(int userId, int id)
     {
-        ExerciseModel? exercise = _applicationDbContext.Exercises.FirstOrDefault(x => x.Id == id);
+        ExerciseModel? exercise = await _applicationDbContext.Exercises.FirstOrDefaultAsync(x => x.Id == id);
 
         return exercise;
     }
 
-    public void AddExercise(ExerciseModel exerciseModel)
+    public async Task AddExerciseAsync(ExerciseModel exerciseModel)
     {
-        _applicationDbContext.Exercises.Add(exerciseModel);
-        _applicationDbContext.SaveChanges();
+        await _applicationDbContext.Exercises.AddAsync(exerciseModel);
+        await _applicationDbContext.SaveChangesAsync();
     }
 
-    public void UpdateExercise(ExerciseModel exerciseModel)
+    public async Task UpdateExerciseAsync(ExerciseModel exerciseModel)
     {
-        _applicationDbContext.Update(exerciseModel);
-        _applicationDbContext.SaveChanges();
+        _applicationDbContext.Exercises.Update(exerciseModel);
+        await _applicationDbContext.SaveChangesAsync();
     }
 }

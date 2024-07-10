@@ -1,16 +1,14 @@
-﻿using FitnessHelper.Models;
-
-namespace FitnessHelper.Repositories.Interfaces;
+﻿namespace FitnessHelper.Repositories.Interfaces;
 
 public interface ITrainingRepository
 {
-    public List<TrainingModel> GetAll(int userId);
+    public Task<List<TrainingModel>> GetAllByStatusAsync(int userId, bool trainingIsActive);
 
-    public TrainingModel GetById(int userId, int id);
+    public Task<TrainingModel> GetByIdAsync(int userId, int id);
 
-    public void Create(TrainingModel trainingModel);
+    public Task CreateAsync(TrainingModel trainingModel);
 
-    public void Update(TrainingModel trainingModel);
+    public Task UpdateAsync(TrainingModel trainingModel);
 
-    public List<ExerciseModel> GetAllExercises(int userId);
+    public Task<List<ExerciseModel>> GetAllExercisesByStatusAsync(int userId, bool exerciseIsActive);
 }

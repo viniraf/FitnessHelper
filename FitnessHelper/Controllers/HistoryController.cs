@@ -1,84 +1,80 @@
-﻿using FitnessHelper.Models;
-using FitnessHelper.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using TGolla.Swashbuckle.AspNetCore.SwaggerGen;
+﻿namespace FitnessHelper.Controllers;
 
-namespace FitnessHelper.Controllers
+[Route("api/history")]
+[SwaggerControllerOrder(7)]
+[ApiController]
+public class HistoryController : ControllerBase
 {
-    [Route("api/history")]
-    [SwaggerControllerOrder(7)]
-    [ApiController]
-    public class HistoryController : ControllerBase
+    private readonly IHistoryService _historyService;
+
+    private readonly ITrainingService _trainingService;
+
+    public HistoryController(IHistoryService historyService, ITrainingService trainingService)
     {
-        private readonly IHistoryService _historyService;
+        _historyService = historyService;
+        _trainingService = trainingService;
 
-        private readonly ITrainingService _trainingService;
+    }
 
-        public HistoryController(IHistoryService historyService, ITrainingService trainingService)
+    [HttpPost("training")]
+    [Authorize]
+    public async Task<IActionResult> PostTrainingHistory(TrainingHistoryRequestModel trainingHistoryRequest)
+    {
+        if (trainingHistoryRequest == null)
         {
-            _historyService = historyService;
-            _trainingService = trainingService;
-
+            return BadRequest();
         }
 
-        [HttpPost("/training")]
-        public IActionResult PostTrainingHistory(TrainingHistoryRequestModel trainingHistoryRequest)
+        int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+        TrainingModel training = await _trainingService.GetByIdAsync(userId, trainingHistoryRequest.TrainingId);
+
+        if (training == null)
         {
-            if (trainingHistoryRequest == null)
-            {
-                return BadRequest();
-            }
-
-            int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
-
-            TrainingModel training = _trainingService.GetById(userId, trainingHistoryRequest.TrainingId);
-
-            if (training == null)
-            {
-                return NotFound();
-            }
-
-            _historyService.AddTrainingHistory(userId, trainingHistoryRequest);
-
-            return NoContent();
+            return NotFound();
         }
 
-        [HttpPost("/weight")]
-        public IActionResult PostWeightHistory(WeighingHistoryRequestModel weighingHistoryRequest)
+        await _historyService.AddTrainingHistoryAsync(userId, trainingHistoryRequest);
+
+        return NoContent();
+    }
+
+    [HttpPost("weight")]
+    [Authorize]
+    public async Task<IActionResult> PostWeightHistory(WeighingHistoryRequestModel weighingHistoryRequest)
+    {
+        if (weighingHistoryRequest == null)
         {
-            if (weighingHistoryRequest == null)
-            {
-                return BadRequest();
-            }
-
-            int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
-
-            _historyService.AddWeighingHistory(userId, weighingHistoryRequest);
-
-            return NoContent();
+            return BadRequest();
         }
 
-        [HttpGet("/training")]
-        public IActionResult GetTrainingHistory()
-        {
-            int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+        int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-            List<TrainingHistoryModel> trainingHistories = _historyService.GetTrainingHistories(userId);
+        await _historyService.AddWeighingHistoryAsync(userId, weighingHistoryRequest);
 
-            return Ok(trainingHistories);
-        }
+        return NoContent();
+    }
+
+    [HttpGet("training")]
+    [Authorize]
+    public async Task<IActionResult> GetTrainingHistory()
+    {
+        int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+        List<TrainingHistoryModel> trainingHistories = await _historyService.GetTrainingHistoriesAsync(userId);
+
+        return Ok(trainingHistories);
+    }
 
 
-        [HttpGet("/weight")]
-        public IActionResult GetWeightHistory()
-        {
-            int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+    [HttpGet("weight")]
+    [Authorize]
+    public async Task<IActionResult> GetWeightHistory()
+    {
+        int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-            List<WeighingHistoryModel> weighingHistories = _historyService.GetWeighingHistories(userId);
+        List<WeighingHistoryModel> weighingHistories = await _historyService.GetWeighingHistoriesAsync(userId);
 
-            return Ok(weighingHistories);
-        }
+        return Ok(weighingHistories);
     }
 }

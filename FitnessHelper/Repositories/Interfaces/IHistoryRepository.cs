@@ -1,14 +1,12 @@
-﻿using FitnessHelper.Models;
-
-namespace FitnessHelper.Repositories.Interfaces;
+﻿namespace FitnessHelper.Repositories.Interfaces;
 
 public interface IHistoryRepository
 {
-    public void AddTrainingHistory(TrainingHistoryModel trainingHistory);
+    public Task AddTrainingHistoryAsync(TrainingHistoryModel trainingHistory);
 
-    public List<TrainingHistoryModel> GetTrainingHistories(int userId);
+    public Task<List<TrainingHistoryModel>> GetTrainingHistoriesAsync(int userId);
 
-    public void AddWeighingHistory(WeighingHistoryModel weighingHistory);
+    public Task AddWeighingHistoryAsync(WeighingHistoryModel weighingHistory);
 
-    public List<WeighingHistoryModel> GetWeighingHistories(int userId);
+    public Task<List<WeighingHistoryModel>> GetWeighingHistoriesAsync(int userId);
 }

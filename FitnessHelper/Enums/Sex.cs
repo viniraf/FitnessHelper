@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace FitnessHelper.Enums;
+﻿namespace FitnessHelper.Enums;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum Sex

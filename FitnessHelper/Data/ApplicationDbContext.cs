@@ -1,7 +1,4 @@
-﻿using FitnessHelper.Models;
-using Microsoft.EntityFrameworkCore;
-
-namespace FitnessHelper.Data;
+﻿namespace FitnessHelper.Data;
 
 public class ApplicationDbContext : DbContext
 {
@@ -69,7 +66,7 @@ public class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<TrainingHistoryModel>(model =>
         {
-            model.ToTable("TrainingHistory");
+            model.ToTable("TrainingHistories");
             model.HasKey(trainingHistory =>  trainingHistory.Id);
             model.Property(trainingHistory => trainingHistory.Date).IsRequired();
             model.Property(trainingHistory => trainingHistory.UserId).IsRequired().HasColumnType("int");
@@ -85,7 +82,7 @@ public class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<WeighingHistoryModel>(model =>
         {
-            model.ToTable("WeighingHistory");
+            model.ToTable("WeighingHistories");
             model.HasKey(weighingHistory =>  weighingHistory.Id);
             model.Property(weighingHistory => weighingHistory.Date).IsRequired();
             model.Property(weighingHistory => weighingHistory.Weight).IsRequired().HasColumnType("decimal(4,2)");

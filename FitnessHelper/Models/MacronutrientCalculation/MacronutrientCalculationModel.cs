@@ -1,4 +1,4 @@
-﻿namespace FitnessHelper.Models;
+﻿namespace FitnessHelper.Models.MacronutrientCalculation;
 
 public class MacronutrientCalculationModel
 {
@@ -16,7 +16,7 @@ public class MacronutrientCalculationModel
 
     public MacronutrientCalculationModel()
     {
-        
+
     }
 
     public MacronutrientCalculationModel(int basalMetabolicRate, string goal, double goalBasalMetabolicRate, double protGrams, double carbGrams, double fatGrams)

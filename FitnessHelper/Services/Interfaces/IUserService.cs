@@ -1,15 +1,12 @@
-﻿using FitnessHelper.Enums;
-using FitnessHelper.Models;
-
-namespace FitnessHelper.Services.Interfaces;
+﻿namespace FitnessHelper.Services.Interfaces;
 
 public interface IUserService
 {
-    public void Register(UserRegisterModel userRegisterModel);
+    public Task RegisterAsync(UserRegisterModel userRegisterModel);
 
-    public UserModel GetByUsername(string username);
+    public Task<UserModel> GetByUsernameAsync(string username);
 
-    public LoginResult Login(UserLoginModel userLoginModel);
+    public Task<LoginResult> LoginAsync(UserLoginModel userLoginModel);
 
     public string GenerateToken(int userId);
 }
