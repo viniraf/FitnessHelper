@@ -4,9 +4,9 @@ public class TrainingHistoryModel
 {
     public int Id { get; set; }
 
-    public DateOnly Date { get; set; }
-
     public int TrainingId { get; set; }
+
+    public DateOnly Date { get; set; }
 
     [NotMapped]
     public string TrainingName { get; set; } = string.Empty;
