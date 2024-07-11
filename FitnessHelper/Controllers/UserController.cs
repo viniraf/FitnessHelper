@@ -19,7 +19,7 @@ public class UserController : ControllerBase
     {
         if (string.IsNullOrEmpty(user.Name) || string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password))
         {
-            return BadRequest("The information was not filled in correctly");
+            return BadRequest();
         }
 
         await _userService.RegisterAsync(user);
@@ -33,14 +33,14 @@ public class UserController : ControllerBase
     {
         if (string.IsNullOrEmpty(userLogin.Username) || string.IsNullOrEmpty(userLogin.Password))
         {
-            return BadRequest("The information was not filled in correctly");
+            return BadRequest();
         }
 
         LoginResult loginResult = await _userService.LoginAsync(userLogin);
 
         if (loginResult == LoginResult.InvalidCredentials)
         {
-            return Unauthorized("Invalid credentials");
+            return Unauthorized();
         }
 
         UserModel userModel = await _userService.GetByUsernameAsync(userLogin.Username);
