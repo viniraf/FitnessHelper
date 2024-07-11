@@ -36,7 +36,7 @@ public class HistoryController : ControllerBase
 
         await _historyService.AddTrainingHistoryAsync(userId, trainingHistoryRequest);
 
-        return NoContent();
+        return Created();
     }
 
     [HttpPost("weight")]
@@ -52,7 +52,7 @@ public class HistoryController : ControllerBase
 
         await _historyService.AddWeighingHistoryAsync(userId, weighingHistoryRequest);
 
-        return NoContent();
+        return Created();
     }
 
     [HttpGet("training")]

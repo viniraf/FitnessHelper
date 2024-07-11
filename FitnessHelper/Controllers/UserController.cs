@@ -24,7 +24,7 @@ public class UserController : ControllerBase
 
         await _userService.RegisterAsync(user);
 
-        return Ok("User created successfully");
+        return Created();
     }
 
     [SwaggerOperation(Tags = ["User"])]
