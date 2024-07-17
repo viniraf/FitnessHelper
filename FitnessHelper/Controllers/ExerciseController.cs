@@ -1,7 +1,7 @@
 ﻿namespace FitnessHelper.Controllers;
 
 [Route("api/exercise")]
-[SwaggerControllerOrder(4)]
+[SwaggerControllerOrder(5)]
 [ApiController]
 public class ExerciseController : ControllerBase
 {

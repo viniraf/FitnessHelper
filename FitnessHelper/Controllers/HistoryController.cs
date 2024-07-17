@@ -1,7 +1,7 @@
 ﻿namespace FitnessHelper.Controllers;
 
 [Route("api/history")]
-[SwaggerControllerOrder(7)]
+[SwaggerControllerOrder(6)]
 [ApiController]
 public class HistoryController : ControllerBase
 {

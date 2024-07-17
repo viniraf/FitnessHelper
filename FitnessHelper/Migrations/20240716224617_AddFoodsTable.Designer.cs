@@ -4,6 +4,7 @@ using FitnessHelper.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessHelper.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240716224617_AddFoodsTable")]
+    partial class AddFoodsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,19 +74,19 @@ namespace FitnessHelper.Migrations
                         .HasColumnType("varchar(50)");
 
                     b.Property<decimal>("Qty")
-                        .HasColumnType("decimal(8,2)");
+                        .HasColumnType("decimal(8,4)");
 
                     b.Property<decimal>("QtyCal")
-                        .HasColumnType("decimal(8,2)");
+                        .HasColumnType("decimal(8,4)");
 
                     b.Property<decimal>("QtyCarb")
-                        .HasColumnType("decimal(8,2)");
+                        .HasColumnType("decimal(8,4)");
 
                     b.Property<decimal>("QtyFat")
-                        .HasColumnType("decimal(8,2)");
+                        .HasColumnType("decimal(8,4)");
 
                     b.Property<decimal>("QtyProt")
-                        .HasColumnType("decimal(8,2)");
+                        .HasColumnType("decimal(8,4)");
 
                     b.Property<string>("UnitOfMeasurement")
                         .IsRequired()
