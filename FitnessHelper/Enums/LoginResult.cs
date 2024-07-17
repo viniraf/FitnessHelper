@@ -2,7 +2,6 @@
 
 public enum LoginResult
 {
-    UserNotFound,
-    InvalidPassword,
-    ValidLogin
+    InvalidCredentials,
+    ValidCredentials
 }

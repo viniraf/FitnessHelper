@@ -1,7 +1,7 @@
 ﻿namespace FitnessHelper.Controllers;
 
 [Route("api/history")]
-[SwaggerControllerOrder(7)]
+[SwaggerControllerOrder(6)]
 [ApiController]
 public class HistoryController : ControllerBase
 {
@@ -36,7 +36,7 @@ public class HistoryController : ControllerBase
 
         await _historyService.AddTrainingHistoryAsync(userId, trainingHistoryRequest);
 
-        return NoContent();
+        return Created();
     }
 
     [HttpPost("weight")]
@@ -52,7 +52,7 @@ public class HistoryController : ControllerBase
 
         await _historyService.AddWeighingHistoryAsync(userId, weighingHistoryRequest);
 
-        return NoContent();
+        return Created();
     }
 
     [HttpGet("training")]

@@ -1,7 +1,7 @@
 ﻿namespace FitnessHelper.Controllers;
 
 [Route("api/training")]
-[SwaggerControllerOrder(3)]
+[SwaggerControllerOrder(4)]
 [ApiController]
 public class TrainingController : ControllerBase
 {
@@ -53,12 +53,12 @@ public class TrainingController : ControllerBase
 
         await _trainingService.CreateAsync(userId, trainingRequestModel);
 
-        return Ok("Training was created successfully");
+        return Created();
     }
 
-    [HttpPut("{id}")]
+    [HttpPatch("{id}")]
     [Authorize]
-    public async Task<IActionResult> Put(int id, TrainingUpdateRequestModel trainingUpdateRequestModel)
+    public async Task<IActionResult> Patch(int id, TrainingUpdateRequestModel trainingUpdateRequestModel)
     {
         int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
@@ -71,7 +71,7 @@ public class TrainingController : ControllerBase
         
         await _trainingService.UpdateAsync(userId, id, trainingUpdateRequestModel);
 
-        return Ok($"Update training by id: {id}");
+        return NoContent();
     }
 
 }

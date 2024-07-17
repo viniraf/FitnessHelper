@@ -19,12 +19,12 @@ public class UserController : ControllerBase
     {
         if (string.IsNullOrEmpty(user.Name) || string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password))
         {
-            return BadRequest("The information was not filled in correctly");
+            return BadRequest();
         }
 
         await _userService.RegisterAsync(user);
 
-        return Ok("User created successfully");
+        return Created();
     }
 
     [SwaggerOperation(Tags = ["User"])]
@@ -33,19 +33,14 @@ public class UserController : ControllerBase
     {
         if (string.IsNullOrEmpty(userLogin.Username) || string.IsNullOrEmpty(userLogin.Password))
         {
-            return BadRequest("The information was not filled in correctly");
+            return BadRequest();
         }
 
         LoginResult loginResult = await _userService.LoginAsync(userLogin);
 
-        if (loginResult == LoginResult.UserNotFound)
+        if (loginResult == LoginResult.InvalidCredentials)
         {
-            return Unauthorized("Invalid credentials");
-        }
-
-        if (loginResult == LoginResult.InvalidPassword)
-        {
-            return Unauthorized("Invalid password");
+            return Unauthorized();
         }
 
         UserModel userModel = await _userService.GetByUsernameAsync(userLogin.Username);

@@ -1,7 +1,7 @@
 ﻿namespace FitnessHelper.Controllers;
 
 [Route("api/exercise")]
-[SwaggerControllerOrder(4)]
+[SwaggerControllerOrder(5)]
 [ApiController]
 public class ExerciseController : ControllerBase
 {
@@ -18,14 +18,14 @@ public class ExerciseController : ControllerBase
     {
         if (exerciseRequestModel == null)
         {
-            return BadRequest("Fill in the information correctly");
+            return BadRequest();
         }
 
         int userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
         await _exerciseService.AddExerciseAsync(userId, exerciseRequestModel);
 
-        return NoContent();
+        return Created();
     }
 
     [HttpPatch("{id}")]

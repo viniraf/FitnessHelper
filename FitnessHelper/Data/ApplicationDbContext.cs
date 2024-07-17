@@ -1,4 +1,5 @@
-﻿namespace FitnessHelper.Data;
+﻿using FitnessHelper.Models.Food;
+namespace FitnessHelper.Data;
 
 public class ApplicationDbContext : DbContext
 {
@@ -16,6 +17,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<TrainingHistoryModel> TrainingHistories { get; set; }
 
     public DbSet<WeighingHistoryModel> WeighingHistories { get; set; }
+
+    public DbSet<FoodModel> Foods { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -91,6 +94,20 @@ public class ApplicationDbContext : DbContext
             model.HasOne<UserModel>()
                 .WithMany()
                 .HasForeignKey(wh => wh.UserId);
+        });
+
+        modelBuilder.Entity<FoodModel>(model =>
+        {
+            model.ToTable("Foods");
+            model.HasKey(food => food.Id);
+            model.Property(food => food.Id).ValueGeneratedOnAdd();
+            model.Property(food => food.Name).IsRequired().HasColumnType("varchar(50)");
+            model.Property(food => food.Qty).IsRequired().HasColumnType("decimal(8,2)");
+            model.Property(food => food.UnitOfMeasurement).IsRequired().HasColumnType("varchar(25)");
+            model.Property(food => food.QtyProt).IsRequired().HasColumnType("decimal(8,2)");
+            model.Property(food => food.QtyCarb).IsRequired().HasColumnType("decimal(8,2)");
+            model.Property(food => food.QtyFat).IsRequired().HasColumnType("decimal(8,2)");
+            model.Property(food => food.QtyCal).IsRequired().HasColumnType("decimal(8,2)");
         });
     }
 }
