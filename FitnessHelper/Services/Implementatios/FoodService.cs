@@ -48,6 +48,15 @@ public class FoodService : IFoodService
         return food;
     }
 
+    public async Task<List<FoodModel>> GetAllByNameAsync(string name)
+    {
+        string lowerName = name.ToLower();
+
+        var foods = await _foodRepository.GetAllByNameAsync(lowerName);
+
+        return foods;
+    }
+
     public async Task PatchAsync(int id, FoodRequestModel foodRequestModel)
     {
 

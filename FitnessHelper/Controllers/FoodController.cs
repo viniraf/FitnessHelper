@@ -28,24 +28,20 @@ public class FoodController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] string name = "")
     {
-        List<FoodModel> foods = await _foodService.GetAllAsync();
+        List<FoodModel> foods = new List<FoodModel>();
 
-        return Ok(foods);
-    }
-
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(int id)
-    {
-        FoodModel food = await _foodService.GetByIdAsync(id);
-
-        if (food == null)
+        if (string.IsNullOrEmpty(name))
         {
-            return NotFound();
+            foods = await _foodService.GetAllAsync();
+        }
+        else
+        {
+            foods = await _foodService.GetAllByNameAsync(name);
         }
 
-        return Ok(food);
+        return Ok(foods);
     }
 
     [HttpPatch("{id}")]

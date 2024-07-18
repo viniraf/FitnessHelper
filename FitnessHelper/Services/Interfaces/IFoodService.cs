@@ -8,6 +8,8 @@ public interface IFoodService
 
     public Task<List<FoodModel>> GetAllAsync();
 
+    public Task<List<FoodModel>> GetAllByNameAsync(string name);
+
     public Task<FoodModel> GetByIdAsync(int id);
 
     public Task PatchAsync(int id, FoodRequestModel foodRequestModel);

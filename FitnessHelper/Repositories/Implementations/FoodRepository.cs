@@ -24,6 +24,15 @@ public class FoodRepository : IFoodRepository
         return foods;
     }
 
+    public async Task<List<FoodModel>> GetAllByNameAsync(string lowerName)
+    {
+        List<FoodModel> foods = await _applicationDbContext.Foods
+            .Where(f => f.Name.ToLower().Contains(lowerName))
+            .ToListAsync();
+
+        return foods;
+    }
+
     public async Task<FoodModel> GetByIdAsync(int id)
     {
         FoodModel? food = await _applicationDbContext.Foods.FirstOrDefaultAsync(f => f.Id == id);
